@@ -1,0 +1,260 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<style>
+    html {
+    background-image: url('logo/albfundal.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    }
+</style>
+
+<head>
+    <title>urgente</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <link rel="stylesheet" href="LogoIndex.css">
+    <link rel="stylesheet" type="text/css" href="desenarearbore.css">
+    <link rel="stylesheet" type="text/css" href="selectii.css">
+    <link rel="stylesheet" type="text/css" href="Salariati.css">
+
+</head>
+<body>
+<script src="LogareMeniu.js"></script>
+<script src="desenarearbore.js"></script>
+<script src="selectii.js"></script>
+
+<script type="application/x-javascript" charset="UTF-8">
+    //ascund selectiile care sunt incluse in pagina selectii.js dar de care nu este nevoie in pagina de urgente
+    document.getElementById("optiuni_filtre_2").style.display="none";
+    document.getElementById("optiuni_filtre_3").style.display="none";
+    document.getElementById("[0]_[4]_fil").style.display="none";
+    document.getElementById("[1]_[4]_fil").style.display="none";
+    
+function informatii_de_intors (nrlinie,cheie_salariat,nume_salariat){
+        ls=[];//mai intai initialiezez cu multimea vida intregul array
+        //ls[0]=[];
+        pttitlu="";
+        for (j=0;j<tabela_salariati[nrlinie].length;j++) { //am pus -2 deoarece au aparut 2 campuri noi la final in baza de date unul cu nume si unul cu prenume
+           //ls[0][j]=tabela_salariati[nrlinie][j]; //-nu mai este nevoie deoarece continutul informatiilor din lista este diferit
+           if (j>10 && j<23 &&tabela_salariati[nrlinie][j]!==null && tabela_salariati[nrlinie][j]!=="") {
+             if (pttitlu=="") {
+                 pttitlu=tabela_salariati[nrlinie][j];
+                 ultimele2structuri=tabela_salariati[nrlinie][j];
+             }else{pttitlu=pttitlu+", "+tabela_salariati[nrlinie][j];
+                   //ultimele doua structuri de care apartine
+                   ultimele2structuri=tabela_salariati[nrlinie][j-1]+", "+tabela_salariati[nrlinie][j];
+                                                                      }
+           }
+        }
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+       if (x.readyState==4 && x.status==200){
+             if (x.responseText!=="Nu exista") {
+                ls=JSON.parse(atob(decodeURIComponent(x.responseText)));
+                lista_salariati(ls,pttitlu);                
+             }else{
+                if (document.getElementById("br1")) {document.getElementById("br1").remove();}
+                if (document.getElementById("Titlu_tabel")) {document.getElementById("Titlu_tabel").remove();}
+                if (document.getElementById("br2")) {document.getElementById("br2").remove();}
+                if (document.getElementById("sal")) {document.getElementById("sal").remove();}
+             }
+             //generez un tabelul cu toti salariatii selectati
+       }
+    };                                                             
+    x.open("POST","Urgente.php",true);
+    x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+    x.send("cheie_salariat="+cheie_salariat+"&pagina="+document.title);      
+}
+    
+    
+    function genereaza_tabel(id_ul) {  //aceasta functie este apelata din pagina     desenarearbore.js  ASADAR, NU SE VA STERGE
+    //duc pentru inceput, div-ul in care urmeaza sa fie realizat tabelul, cu 200 de px mai sus datorita introducerii grilelor suplimentare de selectie in pagina
+
+    
+    //voi trimite catre server informatii privind pagina in care se afla persoana precum si id-ul trimis transformat intr-o cerinta sql
+    z=id_ul;
+    //elimin partea de inceput a lui z (l_)
+    z=z.substr(z.indexOf("_")+1,z.length);
+    i=0;
+    //realizez partea string
+    while (z.indexOf("_")>-1){
+              str=z.substr(0,z.indexOf("_"));
+              z=z.substr(z.indexOf("_")+1,z.length);
+              i=i+1;
+              if (i==1) {
+                 ptsql="salariati.S"+i+"='"+str+"'";
+                 pttitlu=str;
+              }else{ptsql=ptsql+" AND S"+i+"='"+str+"'"; }
+    }
+    i=i+1;
+    if (i==1) {
+               ptsql="salariati.S"+i+"='"+z+"'";
+               pttitlu=z;
+    }else{ptsql=ptsql+" AND salariati.S"+i+"='"+z+"'"; pttitlu=pttitlu+", "+z;}
+    //verific daca exista informatii si daca exista le adaug in variabila ptsql
+    if (document.getElementById("sex").options[document.getElementById("sex").selectedIndex].value!=="") {
+        if (document.getElementById("sex").options[document.getElementById("sex").selectedIndex].value=='M') {
+             ptsql=ptsql+" AND salariati.Sex='1'";           
+        }
+        if (document.getElementById("sex").options[document.getElementById("sex").selectedIndex].value=='F') {
+             ptsql=ptsql+" AND salariati.Sex='2'";           
+        }
+    }
+    
+    if (document.getElementById("Varsta_incepand_cu").value!=="") {
+        d=new Date();
+               luna=d.getMonth()+1;
+               if (d.getMonth()<10) {
+                     da=d.getFullYear()-document.getElementById("Varsta_incepand_cu").value+"-0"+luna+"-"+d.getDate();
+                  }else{
+                     da=d.getFullYear()-document.getElementById("Varsta_incepand_cu").value+"-"+luna+"-"+d.getDate();
+               }
+        ptsql=ptsql+" AND salariati.DNastere<='"+da+"'"; //mai mic deoarece fac scadeea intre data curenta si varsta incepand cu care daca este de 20 ani arunci voi scadea doar 20 devenind de fapt data de final
+    }
+    
+    if (document.getElementById("Varsta_pana_la").value!=="") {
+        d=new Date();
+               luna=d.getMonth()+1;
+               if (d.getMonth()<10) {
+                     da=d.getFullYear()-document.getElementById("Varsta_pana_la").value+"-0"+luna+"-"+d.getDate();
+                  }else{
+                     da=d.getFullYear()-document.getElementById("Varsta_pana_la").value+"-"+luna+"-"+d.getDate();
+               }
+        ptsql=ptsql+" AND salariati.DNastere>='"+da+"'";
+    }
+    if (document.getElementById("CIM").options[document.getElementById("CIM").selectedIndex].value!=="") {
+        ptsql=ptsql+" AND salariati.SitCIM='"+document.getElementById("CIM").options[document.getElementById("CIM").selectedIndex].value+"'";
+    }
+    if (document.getElementById("Perioada_incepand_cu").value!=="") {
+        ptsql=ptsql+" AND urgente.Data>='"+document.getElementById("Perioada_incepand_cu").value+"'";
+    }
+    if (document.getElementById("Perioada_pana_la").value!=="") {
+        ptsql=ptsql+" AND urgente.Data<='"+document.getElementById("Perioada_pana_la").value+"'";
+    }
+    //if (document.getElementById("coduriboli").options[document.getElementById("coduriboli").selectedIndex].value!=="") {
+    //    ptsql=ptsql+" AND concedii.CodDiagnostic='"+document.getElementById("coduriboli").options[document.getElementById("coduriboli").selectedIndex].value+"'";
+    //}
+    //if (document.getElementById("DenumireCodDiagnostic").options[document.getElementById("DenumireCodDiagnostic").selectedIndex].value!=="") {
+    //    ptsql=ptsql+" AND concedii.Afectiune='"+document.getElementById("DenumireCodDiagnostic").options[document.getElementById("DenumireCodDiagnostic").selectedIndex].value+"'";
+    //}
+    //if (document.getElementById("aparate").options[document.getElementById("aparate").selectedIndex].value!=="") {
+    //    ptsql=ptsql+" AND concedii.Aparat='"+document.getElementById("aparate").options[document.getElementById("aparate").selectedIndex].value+"'";
+    //}
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+       if (x.readyState==4 && x.status==200){
+             if (x.responseText!=="Nu exista") {
+                ls=JSON.parse(atob(decodeURIComponent(x.responseText)));
+                lista_salariati(ls,pttitlu);                
+             }else{
+                if (document.getElementById("br1")) {document.getElementById("br1").remove();}
+                if (document.getElementById("Titlu_tabel")) {document.getElementById("Titlu_tabel").remove();}
+                if (document.getElementById("br2")) {document.getElementById("br2").remove();}
+                if (document.getElementById("sal")) {document.getElementById("sal").remove();}
+             }
+             //generez un tabelul cu toti salariatii selectati
+       }
+    };                                                             
+    x.open("POST","Urgente.php",true);
+    x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+    x.send("ptsql="+ptsql+"&pagina="+document.title);   
+}
+
+function lista_salariati(ls,pttitlu) {
+        
+    // Crează un CSV din datele obiectului
+     let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Urgente," + pttitlu + "\n"; // Adaugă titlul
+    csvContent += "Marca,Nume si Prenume,CNP,Varsta,Sex,Functia,CIM,Ambulanta,Data,Ora,Observatii\n"; // Adaugă header-ul
+    for (i=0;i<ls.length;i++) {
+       for (j=1;j<=11;j++) {
+            if (j<11) {
+                      csvContent +=ls[i][j]+ ","; //////////// sa nu fie cred si la ultimul element   + ","                                             
+            }else{csvContent +=ls[i][j]+ "\n";}
+       }  
+    }
+
+    if (document.getElementById("fisierCSV")) {document.getElementById("fisierCSV").remove();}
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.id="fisierCSV";
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "Urgente " + pttitlu + ".csv");
+    link.innerHTML="&nbsp&nbspCSV";
+    document.getElementById("[1]_[3]_fil").appendChild(link);
+    
+    
+    if (document.getElementById("br1")) {document.getElementById("br1").remove();}
+    if (document.getElementById("Titlu_tabel")) {document.getElementById("Titlu_tabel").remove();}
+    if (document.getElementById("br2")) {document.getElementById("br2").remove();}
+    a=document.createElement("br");a.id="br1"; document.getElementById("div_tabel").appendChild(a);    
+    a=document.createElement('label');a.id="Titlu_tabel";a.innerHTML="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+pttitlu+" - "+ls.length; document.getElementById("div_tabel").appendChild(a);
+    a=document.createElement("br");a.id="br2"; document.getElementById("div_tabel").appendChild(a);
+    //div-urile trebuie sa inceapa de la 3 deoarece exista 1 si 2 in LogareMeniu.js
+                        //generez un tabel cu informatia primita
+                            if (document.getElementById("sal")) {document.getElementById("sal").remove();}
+                                     //generez tabelul
+                                     tabel=document.createElement('TABLE');
+                                     tabel.id="sal";
+                                     tabel.name="sal";
+                                     tabel.classList.add("table", "is-striped", "is-bordered", "is-hoverable", "$table-row-hover-background-color");
+                                     tabel.style.border="1px solid black";
+                                     tabel.style.borderCollapse="collapse";
+                                     document.getElementById("div_tabel").appendChild(tabel);
+
+                                         tr=document.createElement("TR");
+                                         tr.id="tr_sal_00";
+                                         tr.name="tr_sal_00";
+                                         tr.className = "tabel_header";
+                                         tr.style.border="1px solid black";
+                                         document.getElementById("sal").appendChild(tr);
+
+                                         //th=document.createElement("TH");th.id="th_sal_[0]";th.name="th_sal_[0]";th.style.border="1px solid black";th.innerHTML="Cheie";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[1]";th.name="th_sal_[1]";th.style.border="1px solid black";th.innerHTML="Marca";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[2]";th.name="th_sal_[2]";th.style.border="1px solid black";th.innerHTML="Nume si Prenume";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[3]";th.name="th_sal_[3]";th.style.border="1px solid black";th.innerHTML="CNP";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[4]";th.name="th_sal_[4]";th.style.border="1px solid black";th.innerHTML="Varsta";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[5]";th.name="th_sal_[5]";th.style.border="1px solid black";th.innerHTML="Sex";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[6]";th.name="th_sal_[6]";th.style.border="1px solid black";th.innerHTML="Functia";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[7]";th.name="th_sal_[7]";th.style.border="1px solid black";th.innerHTML="CIM";document.getElementById("tr_sal_00").appendChild(th);
+                                         //th=document.createElement("TH");th.id="th_sal_[8]";th.name="th_sal_[8]";th.style.border="1px solid black";th.innerHTML="Serviciu:";document.getElementById("tr_sal_00").appendChild(th);
+                                         //th=document.createElement("TH");th.id="th_sal_[9]";th.name="th_sal_[9]";th.style.border="1px solid black";th.innerHTML="Personal:";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[8]";th.name="th_sal_[8]";th.style.border="1px solid black";th.innerHTML="Ambulanta";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[9]";th.name="th_sal_[9]";th.style.border="1px solid black";th.innerHTML="Data";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[10]";th.name="th_sal_[10]";th.style.border="1px solid black";th.innerHTML="Ora";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[11]";th.name="th_sal_[11]";th.style.border="1px solid black";th.innerHTML="Observatii";document.getElementById("tr_sal_00").appendChild(th);
+
+                                         
+                                         
+                                         
+                                         datacurenta = new Date();
+                                         numaruldezile=(datacurenta.getFullYear()-1)*365+datacurenta.getMonth()*30+datacurenta.getDate();
+                                       for (i=0;i<ls.length;i++) { ///////////// daca se reampart nr de venituri per coloana atunci se modifica si aici
+                                           anul=parseInt(ls[i][4].substr(0,ls[i][4].indexOf("-")));
+                                           luna=parseInt(ls[i][4].substr(5,ls[i][4].indexOf("-")));
+                                           ziua=parseInt(ls[i][4].substr(8,ls[i][4].indexOf("-")));
+                                           totalzile=(anul-1)*365+(luna-1)*30+ziua;
+                                           if (ls[i][5]==1) {sex="M";}else{sex="F";}
+                                           tr=document.createElement("TR");tr.id=i;tr.name=i;border="1px solid black";tr.className = "tabel_linie";document.getElementById("sal").appendChild(tr);
+                                           //td=document.createElement("TD");td.id="["+i+"]_[0]_sal";td.name="["+i+"]_[0]_sal";td.innerHTML=ls[i][0];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[1]_sal";td.name="["+i+"]_[1]_sal";td.innerHTML=ls[i][1];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[2]_sal";td.name="["+i+"]_[2]_sal";td.innerHTML=ls[i][2];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[3]_sal";td.name="["+i+"]_[3]_sal";td.innerHTML=ls[i][3];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[4]_sal";td.name="["+i+"]_[4]_sal";td.innerHTML=Math.trunc((numaruldezile-totalzile)/365);td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[5]_sal";td.name="["+i+"]_[5]_sal";td.innerHTML=sex;td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[6]_sal";td.name="["+i+"]_[6]_sal";td.innerHTML=ls[i][6];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[7]_sal";td.name="["+i+"]_[7]_sal";td.innerHTML=ls[i][7];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                          // td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                          // td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[10]_sal";td.name="["+i+"]_[10]_sal";td.innerHTML=ls[i][10];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[11]_sal";td.name="["+i+"]_[11]_sal";td.innerHTML=ls[i][11];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+
+                                       }                            
+}
+</script>
+
+</body>
+</html>

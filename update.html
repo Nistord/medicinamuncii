@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<style>
+    html {
+    background-image: url('logo/albfundal.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    }
+    
+    
+        #loadingMessage {
+            display: none; 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background: rgba(10,10,10,10.7); 
+            color: white; 
+            padding: 20px; 
+            border-radius: 5px;
+            z-index: 1002; /* Mesajul este deasupra overlay-ului */
+        }
+        #overlay {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(100,100,100,100.5);
+            z-index: 1001; /* Overlay-ul este deasupra altor elemente */
+        }
+        
+.button {
+    padding: 15px 30px;
+    background-color: #620ea;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow:  4px 8px rgba(, , , .2);
+    transition: background-color .3s, transform .2s;
+}
+
+.button:hover {
+    background-color: #370b3;
+    transform: translateY(-2px);
+}
+
+.button:active {
+    transform: translateY(1px);
+}
+    </style>
+</style>
+
+<head>
+    <title>update-uri</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <link rel="stylesheet" href="LogoIndex.css">
+</head>
+<body>
+<script src="LogareMeniu.js"></script>
+<script type="application/x-javascript" charset="UTF-8">
+  //identific din cooki-uri marca persoanei care s-a logat
+  ecm=document.cookie;
+  ecm=ecm.substr(ecm.indexOf("Marc")+5,ecm.length);
+  ecm=ecm.substr(0,ecm.indexOf(";"));
+    
+     //verific drepturile persoanei
+     //mai intai verific ecm-ul - daca persoana s-a logat
+    var xdrept=new XMLHttpRequest();
+    xdrept.onreadystatechange=function(){
+       if (xdrept.readyState==4 && xdrept.status==200){
+             if(xdrept.responseText=="Exista dreptul."){
+                            //div pentru sectiunea de actualizare a informatiillor privnd salariatii 
+                            div=document.createElement("div");div.id="div_actualizare_salariati";div.style.padding="3rem";document.body.appendChild(div);
+                            div=document.createElement("div");div.id="div_meniu_lateral";div.className="button";div.innerHTML="Actualizeaza informatiile privind salariatii";
+                            div.onclick=function(){
+                                      var x=new XMLHttpRequest();
+                                      x.onreadystatechange=function(){
+                                          if (x.readyState==4 && x.status==200) {
+                                                   // Dupa ce actualizarea este finalizata, se ascunde mesajul de incarcare
+                                                  document.getElementById('loadingMessage').style.display = 'none';
+                                                  document.getElementById('overlay').style.display = 'none';
+                                          }
+                                      };                
+                                      x.open("POST","ActualizareSalariatiInBDdinCharismaprinAPlusMM.php",true);
+                                      x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                      x.send("orice=orice");
+                                  
+                                // Afiseaza mesajul si blocheaza interactiunea
+                                document.getElementById('loadingMessage').style.display = 'block';
+                                document.getElementById('overlay').style.display = 'block';
+                        
+                            };
+                            document.getElementById("div_actualizare_salariati").appendChild(div);
+                            
+                            
+                            //div pentru sectiunea de actualizare a informatiilor privind concediile de boala
+                            div=document.createElement("div");div.id="div_actualizare_boli";div.style.padding="3rem";document.body.appendChild(div);
+                            
+                            //div pentru subcomponenta de introducere a datelor necesare lansarii update-ului de date privind concediile de boala  
+                            div=document.createElement("div");div.id="div_actualizare_boli_date_introduse";div.style.paddingTop="0.3rem";div.style.paddingBottom="0.3rem";document.getElementById("div_actualizare_boli").appendChild(div);
+                            a=document.createElement("label");a.id="l_luna";a.innerHTML="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Luna*: ";a.style.fontWeight="bold";a.style.fontSize=20;document.getElementById("div_actualizare_boli_date_introduse").appendChild(a);
+                            a=document.createElement("input");a.type="text";a.id="luna";a.size=1;a.style.textAlign="right";a.style.fontSize=15;document.getElementById("div_actualizare_boli_date_introduse").appendChild(a);
+                            a=document.createElement("label");a.id="l_anul";a.innerHTML="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Anul*: ";a.style.fontWeight="bold";a.style.fontSize=20;document.getElementById("div_actualizare_boli_date_introduse").appendChild(a);
+                            a=document.createElement("input");a.type="text";a.id="anul";a.size=2;a.style.textAlign="right";a.style.fontSize=15;document.getElementById("div_actualizare_boli_date_introduse").appendChild(a);
+                        
+                                     
+                            //div pentru subcomponenta de specificatii privind concediile de boala  
+                            div=document.createElement("div");div.innerHTML="* Prrecizati luna si anul pentru care informatiile privind concediile de boala vor fi actualizate.";
+                            div.id="div_pt_specificatii_de_actualizare";div.style.paddingTop="0.3rem";div.style.paddingBottom="0.3rem";div.style.fontWeight="bold";div.style.fontSize=20;document.getElementById("div_actualizare_boli").appendChild(div);
+                            
+                        
+                            
+                             //div pentru subcomponenta de lansare a update-ului de date privind concediile de boala  
+                            div=document.createElement("div");div.id="div_pt_buton_actualizare";div.style.paddingTop="0.3rem";div.style.paddingBottom="0.3rem";document.getElementById("div_actualizare_boli").appendChild(div);
+                            //returneaza luna din data curenta
+                            data=new Date();
+                            document.getElementById("luna").value=data.getMonth();
+                            document.getElementById("anul").value=data.getFullYear();
+                            div=document.createElement("div");div.id="div_meniu_lateral";div.className="button";div.innerHTML="Actualizeaza informatiile privind concediile de boala";
+                        
+                            //div pentru subcomponenta de lansare a update-ului de date privind concediile de boala  
+                            div.onclick=function(){
+                                      var x=new XMLHttpRequest();
+                                      x.onreadystatechange=function(){
+                                          if (x.readyState==4 && x.status==200) {
+                                                  alert(x.responseText);
+                                                   // Dupa ce actualizarea este finalizata, se ascunde mesajul de incarcare
+                                                  document.getElementById('loadingMessage').style.display = 'none';
+                                                  document.getElementById('overlay').style.display = 'none';
+                                          }
+                                      };                
+                                      x.open("POST","ActualizareBoliInBDdinCharisma.php",true);
+                                      x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                      x.send("luna=" + document.getElementById("luna").value + "& anul=" + document.getElementById("anul").value);
+                                     //"cauta_salariat_nume=" + document.getElementById("nume").value
+                                // Afiseaza mesajul si blocheaza interactiunea
+                                document.getElementById('loadingMessage').style.display = 'block';
+                                document.getElementById('overlay').style.display = 'block';
+                        
+                            };
+                            document.getElementById("div_pt_buton_actualizare").appendChild(div);
+
+
+             }else{alert("La momentul actual nu aveti access pe pagina " + document.title + "!");}
+       }
+    };                                                             
+    xdrept.open("POST","Alerte.php",true);
+    xdrept.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+    xdrept.send("ecm="+ecm+"&pagina="+document.title);   //verific daca are drepturi pe pagina   
+    
+    
+  
+    
+</script>
+
+<div id="overlay"></div>
+<div id="loadingMessage">Se actualizează baza de date... Vă rugăm așteptați.</div>
+
+</body>
+</html>

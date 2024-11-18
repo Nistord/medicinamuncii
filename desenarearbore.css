@@ -1,0 +1,123 @@
+#div_arbore{
+  background-image: url("logo/fundalpicaturi.png");
+  position:absolute;
+  z-index=999;  
+}
+#div_meniu_lateral{
+    background-image: url('logo/organigrama.png'); /* Specifică calea către imagine */
+    background-size: cover; /* Acoperă întregul div */
+    background-position: center; /* Centrează imaginea în div */
+    background-repeat: no-repeat; /* Previne repetarea imaginii */
+    height: 300px; /* Înălțimea div-ului */
+    width: 100%; /* Lățimea div-ului */
+    
+}
+
+/* .div_in_linie {
+    display: inline-flex;
+}    */  
+/*#div_tabel {
+    font-size:0.89rem;
+    white-space: nowrap; /* împiedică ruperea liniei în div-ul tabel */
+    /* overflow: auto; /* permite derularea conținutului dacă este prea lung */
+    /* max-width: 1000px;  poți ajusta această valoare după necesitate 
+}*/
+ul {
+    background-color: transparent; /* Fundal transparent */
+    border: none;                  /* Fără border */
+    margin: 0;                     /* Fără margini */
+    padding: 0;                    /* Fără padding */
+}
+li:hover {
+    color: blue; /* Folosește o culoare ușor vizibilă background-color:     #6b0d0d     burgundi culoare cu care se potriveste verdele inchis - este un rosu inchis*/
+    background-color:white;
+}
+/* Remove default bullets */
+ul, #structuri {
+  list-style-type: none;
+  font-size:0.89rem;/*0.94em;*- daca pun em atunci se diminueaza marimea pe masura ce se acceseaza subcomponentele copil */
+  font-weight:bold;
+  color: rgb(30, 85, 55);
+  background-color: transparent;
+  border: none;
+}
+#structuri {
+  margin: 0;
+  padding: 0;
+}
+/* Remove margins and padding from the parent ul */
+#structuri li{
+  margin: 0;
+ /* padding-left: 5px; /* margin-left: 5px; */
+}
+
+.box {
+  color: rgb(30, 85, 55);   
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  /*user-select: none;*/
+  padding-left: 22px; /* margin-left: 25px; */
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-right: 0px;
+  border-radius: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.box::before {
+  content: "\2610";
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.check-box::before {
+  content: "\2611"; 
+  color: blue;
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+
+/*elemente specifice de design pentru butoanele Aproba si Respinge
+.button0 {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.6rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: white;
+    background-color: #224318;
+    border: none;
+    border-radius: 3rem;
+    box-shadow: 0 0.3rem #424441;
+    font-weight: bold;
+    border-radius: 40%;
+    transition-duration: 0.6s;
+}
+
+.button0:hover {
+    background-color: #3f9225;
+    color: rgb(195, 193, 193);
+
+}
+
+.button0:active {
+    box-shadow: 0 1rem red;
+    background-color: red;
+    transform: translateY(3px);
+}
+
+*/

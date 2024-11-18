@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Fisa de aptitudine</title>
+</head>
+<body>
+    
+    <!-- Insert your content here -->
+<script type="application/x-javascript" charset="UTF-8">
+cheie_f=localStorage.getItem("cheie_f");
+t_fise=[];
+        var xf=new XMLHttpRequest();
+        xf.onreadystatechange=function(){
+             if (xf.readyState==4 && xf.status==200){
+                if (xf.responseText!=="Nu exista") {
+                    t_fise=JSON.parse(atob(decodeURIComponent(xf.responseText)));
+                    tabel=document.createElement('TABLE');tabel.id="fisa";tabel.style.fontSize="17px";document.body.appendChild(tabel);
+                    tr=document.createElement("TR");tr.id="fisalinie";document.getElementById("fisa").appendChild(tr);
+                    td=document.createElement("TD");td.id="celula1";td.style.borderRight="1px solid black";document.getElementById("fisalinie").appendChild(td);
+                    td=document.createElement("TD");td.id="celula2";td.innerHTML="&nbsp";document.getElementById("fisalinie").appendChild(td);
+                    td=document.createElement("TD");td.id="celula3";document.getElementById("fisalinie").appendChild(td);
+                    
+                    div=document.createElement("div");div.id="celula1div";div.style.width="692px";document.getElementById("celula1").appendChild(div);
+                        tabel=document.createElement('TABLE');tabel.id="um1";document.getElementById("celula1div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="um1_tr1";document.getElementById("um1").appendChild(tr);
+                            td=document.createElement("TD");td.id="um1_tr1_c1";td.innerHTML="Unitatea medicală:";document.getElementById("um1_tr1").appendChild(td);
+                                tr=document.createElement("TR");tr.id="um1_tr2";document.getElementById("um1").appendChild(tr);
+                                    td=document.createElement("TD");td.id="um1_tr2_c1";td.innerHTML="Cabinet de medicina muncii:";document.getElementById("um1_tr2").appendChild(td);
+                                    td=document.createElement("TD");td.id="um1_tr2_c2";td.innerHTML="<b>&nbspSC Antibiotice SA</b>";document.getElementById("um1_tr2").appendChild(td);
+                                    td=document.createElement("TD");td.id="um1_tr2_c3";td.innerHTML="&nbsp&nbsp Am luat la cunoștință,&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";td.rowSpan=3;td.style.verticalAlign="top";td.style.border="1px solid black";td.style.borderLeft="1px solid black";td.style.borderRight="1px solid black";document.getElementById("um1_tr2").appendChild(td);
+                                tr=document.createElement("TR");tr.id="um1_tr3";document.getElementById("um1").appendChild(tr);
+                                    td=document.createElement("TD");td.id="um1_tr3_c1";td.innerHTML="Adresa:";document.getElementById("um1_tr3").appendChild(td);
+                                    td=document.createElement("TD");td.id="um1_tr3_c2";td.innerHTML="<b>&nbspIași, str. Valea Lupului nr 1 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>";document.getElementById("um1_tr3").appendChild(td);
+                                tr=document.createElement("TR");tr.id="um1_tr4";document.getElementById("um1").appendChild(tr);
+                                    td=document.createElement("TD");td.id="um1_tr4_c1";td.innerHTML="Telefon: &nbsp&nbsp&nbsp <b>023229000</b> &nbsp&nbsp Fax:";document.getElementById("um1_tr4").appendChild(td);
+                                    td=document.createElement("TD");td.id="um1_tr4_c2";td.innerHTML="<b>&nbsp023229633</b>";document.getElementById("um1_tr4").appendChild(td);
+                                    
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+
+                        tabel=document.createElement('TABLE');tabel.id="om1";document.getElementById("celula1div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="om1_tr1";tr.style.textAlign="right";tr.style.verticalAlign="center";document.getElementById("om1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="om1_tr1_c1";td.style.width="60px";td.innerHTML="Angajare";document.getElementById("om1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om1_tr1_c2";td.style.width="19px";document.getElementById("om1_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_1_1"; document.getElementById("om1_tr1_c2").appendChild(a); ///////////////////////////////// introducere date  
+                                if (t_fise[2]==1) {
+                                        document.getElementById("c_1_1").checked=true;
+                                }else{  document.getElementById("c_1_1").checked=false;}
+                        td=document.createElement("TD");td.id="om1_tr1_c3";td.style.width="96px";td.innerHTML="Control medical";document.getElementById("om1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om1_tr1_c4";td.style.width="19px";document.getElementById("om1_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_1_2"; document.getElementById("om1_tr1_c4").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[3]==1) {
+                                        document.getElementById("c_1_2").checked=true;
+                                }else{  document.getElementById("c_1_2").checked=false;}
+                        td=document.createElement("TD");td.id="om1_tr1_c5";td.style.width="96px";td.innerHTML="Adaptare";document.getElementById("om1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om1_tr1_c6";td.style.width="19px";document.getElementById("om1_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_1_3"; document.getElementById("om1_tr1_c6").appendChild(a);      //////////////////////////////// introducere date
+                                if (t_fise[4]==1) {
+                                        document.getElementById("c_1_3").checked=true;
+                                }else{  document.getElementById("c_1_3").checked=false;}
+                        td=document.createElement("TD");td.id="om1_tr1_c7";td.style.width="96px";td.innerHTML="Reluare a muncii";document.getElementById("om1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om1_tr1_c8";td.style.width="19px";document.getElementById("om1_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_1_4"; document.getElementById("om1_tr1_c8").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[5]==1) {
+                                        document.getElementById("c_1_4").checked=true;
+                                }else{  document.getElementById("c_1_4").checked=false;}
+                        td=document.createElement("TD");td.id="om1_tr1_c9";td.style.width="96px";td.innerHTML="Supraveghere specială";document.getElementById("om1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om1_tr1_c10";td.style.width="19px";document.getElementById("om1_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_1_5"; document.getElementById("om1_tr1_c10").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[6]==1) {
+                                        document.getElementById("c_1_5").checked=true;
+                                }else{  document.getElementById("c_1_5").checked=false;}
+                        td=document.createElement("TD");td.id="om1_tr1_c11";td.style.width="96px";td.innerHTML="Altele";document.getElementById("om1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om1_tr1_c12";td.style.width="19px";document.getElementById("om1_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_1_6"; document.getElementById("om1_tr1_c12").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[7]==1) {
+                                        document.getElementById("c_1_6").checked=true;
+                                }else{  document.getElementById("c_1_6").checked=false;}
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+            
+                        
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="titlu1";document.getElementById("celula1div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="titlu1_tr1";document.getElementById("titlu1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="titlu1_tr1_c1";td.innerHTML="Medicina muncii";document.getElementById("titlu1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="titlu1_tr1_c2";td.style.fontSize="24px";td.innerHTML="<b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- FIȘĂ DE APTITUDINE</b>";document.getElementById("titlu1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="titlu1_tr1_c3";td.style.fontSize="20px";td.innerHTML="nr. "+t_fise[8]+"/"+t_fise[9];document.getElementById("titlu1_tr1").appendChild(td); //////////////////////////////// introducere date
+                        
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+            
+                        div=document.createElement("div");div.id="comentariu_unexemplar1";div.style.width="678px";div.style.textAlign="center";div.innerHTML="<I>( Un exemplar se transmite la angajator, unul se înmânează angajatului )</I>";document.getElementById("celula1div").appendChild(div);
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+                        
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="soc1";document.getElementById("celula1div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="soc1_tr1";document.getElementById("soc1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="soc1_tr1_c1";td.style.width="100px";td.style.fontSize="20px";td.innerHTML="<b>Societatea:</b>";document.getElementById("soc1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="soc1_tr1_c2";td.style.fontSize="20px";td.colSpan=3;td.style.borderBottom="1px solid black";td.innerHTML="S.C. Antibiotice S.A.";document.getElementById("soc1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="soc1_tr1_c3";document.getElementById("soc1_tr1").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc1_tr1_c4";document.getElementById("soc1_tr1").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc1_tr1_c5";document.getElementById("soc1_tr1").appendChild(td);
+                        
+                        tr=document.createElement("TR");tr.id="soc1_tr2";document.getElementById("soc1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="soc1_tr2_c1";td.style.fontSize="20px";td.innerHTML="<b>Adresa:</b>";document.getElementById("soc1_tr2").appendChild(td);
+                        td=document.createElement("TD");td.id="soc1_tr2_c2";td.style.fontSize="20px";td.colSpan=3;td.style.borderBottom="1px solid black";td.innerHTML="Iasi, str. Valea Lupului nr 1.";document.getElementById("soc1_tr2").appendChild(td);
+                        td=document.createElement("TD");td.id="soc1_tr2_c3";document.getElementById("soc1_tr2").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc1_tr2_c4";document.getElementById("soc1_tr2").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc1_tr2_c5";document.getElementById("soc1_tr2").appendChild(td); 
+                        
+                        tr=document.createElement("TR");tr.id="soc1_tr3";document.getElementById("soc1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="soc1_tr3_c1";td.style.fontSize="20px";td.innerHTML="<b>Telefon:</b>";document.getElementById("soc1_tr3").appendChild(td);
+                        td=document.createElement("TD");td.id="soc1_tr3_c2";td.style.fontSize="20px";td.style.width="110px";td.style.borderBottom="1px solid black";td.innerHTML="0232209000";document.getElementById("soc1_tr3").appendChild(td);
+                        td=document.createElement("TD");td.id="soc1_tr3_c3";td.style.fontSize="20px";td.style.width="50px";td.style.textAlign="center";td.innerHTML="<b>Fax:</b>";document.getElementById("soc1_tr3").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc1_tr3_c4";td.style.fontSize="20px";td.style.width="110px";td.style.borderBottom="1px solid black";td.innerHTML="0232209633";document.getElementById("soc1_tr3").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc1_tr3_c5";document.getElementById("soc1_tr3").appendChild(td); 
+                        
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+            
+                        div=document.createElement("div");div.id="inf_persoana1";div.style.width="678px";div.style.border="2px solid black";document.getElementById("celula1div").appendChild(div);
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="nume_pren1";document.getElementById("inf_persoana1").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="nume_pren1_tr1";document.getElementById("nume_pren1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="nume_pren1_tr1_c1";td.style.width="50px";td.style.fontSize="18px";td.innerHTML="Nume:";document.getElementById("nume_pren1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="nume_pren1_tr1_c2";td.style.width="250px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[11]+"</b>";document.getElementById("nume_pren1_tr1").appendChild(td); //////////////////////////////// introducere date
+                        td=document.createElement("TD");td.id="nume_pren1_tr1_c3";td.style.width="50px";td.style.fontSize="18px";td.innerHTML="Prenume:";document.getElementById("nume_pren1_tr1").appendChild(td); 
+                        td=document.createElement("TD");td.id="nume_pren1_tr1_c4";td.style.width="250px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[12]+"</b>";document.getElementById("nume_pren1_tr1").appendChild(td); //////////////////////////////// introducere date
+            
+                        tabel=document.createElement('TABLE');tabel.style.width="320px";tabel.id="CNP1";document.getElementById("inf_persoana1").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="CNP1_tr1";document.getElementById("CNP1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="CNP1_tr1_c1";td.style.width="240px";td.style.fontSize="18px";td.innerHTML="Cod numeric personal:";document.getElementById("CNP1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="CNP1_tr1_c2";td.style.width="160px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[13]+"</b>";document.getElementById("CNP1_tr1").appendChild(td); //////////////////////////////// introducere date
+                 
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="Functie_Loc1";document.getElementById("inf_persoana1").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="Functie_Loc1_tr1";document.getElementById("Functie_Loc1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Functie_Loc1_tr1_c1";td.style.width="120px";td.style.fontSize="18px";td.innerHTML="Functia:";document.getElementById("Functie_Loc1_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="Functie_Loc1_tr1_c2";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[14]+"</b>";document.getElementById("Functie_Loc1_tr1").appendChild(td); //////////////////////////////// introducere date
+                        tr=document.createElement("TR");tr.id="Functie_Loc1_tr2";document.getElementById("Functie_Loc1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Functie_Loc1_tr2_c1";td.style.width="160px";td.style.fontSize="18px";td.innerHTML="Locul de muncă:";document.getElementById("Functie_Loc1_tr2").appendChild(td);
+                        td=document.createElement("TD");td.id="Functie_Loc1_tr2_c2";td.style.fontSize="16px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[15]+"</b>";document.getElementById("Functie_Loc1_tr2").appendChild(td); //////////////////////////////// introducere date
+                        
+              
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+                        
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="Aviz_Recomandari1";document.getElementById("celula1div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="Aviz_Recomandari1_tr1";document.getElementById("Aviz_Recomandari1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Aviz_Recomandari1_tr1_c1";td.style.width="338px";document.getElementById("Aviz_Recomandari1_tr1").appendChild(td);
+                            tabel=document.createElement('TABLE');tabel.style.width="230px";tabel.id="Aviz1";document.getElementById("Aviz_Recomandari1_tr1_c1").appendChild(tabel);
+                            tr=document.createElement("TR");tr.id="Aviz1_tr1";document.getElementById("Aviz1").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz1_tr1_c1";td.style.fontSize="20px";td.innerHTML="<b>AVIZ MEDICAL:</b>";document.getElementById("Aviz1_tr1").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz1_tr1_c2";document.getElementById("Aviz1_tr1").appendChild(td);
+                            tr=document.createElement("TR");tr.id="Aviz1_tr2";document.getElementById("Aviz1").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz1_tr2_c1";td.style.fontSize="18px";td.innerHTML="<b>APT:</b>";document.getElementById("Aviz1_tr2").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz1_tr2_c2";document.getElementById("Aviz1_tr2").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_apt_1"; document.getElementById("Aviz1_tr2_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==1) {
+                                        document.getElementById("c_apt_1").checked=true;
+                                }else{  document.getElementById("c_apt_1").checked=false;}
+                            tr=document.createElement("TR");tr.id="Aviz1_tr3";document.getElementById("Aviz1").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz1_tr3_c1";td.style.fontSize="18px";td.innerHTML="<b>APT CONDITIONAT:</b>";document.getElementById("Aviz1_tr3").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz1_tr3_c2";document.getElementById("Aviz1_tr3").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_apt_cond_1"; document.getElementById("Aviz1_tr3_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==2) {
+                                        document.getElementById("c_apt_cond_1").checked=true;
+                                }else{  document.getElementById("c_apt_cond_1").checked=false;}
+                            tr=document.createElement("TR");tr.id="Aviz1_tr4";document.getElementById("Aviz1").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz1_tr4_c1";td.style.fontSize="18px";td.innerHTML="<b>INAPT TEMPORAR:</b>";document.getElementById("Aviz1_tr4").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz1_tr4_c2";document.getElementById("Aviz1_tr4").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_inaptapt_temporar_1"; document.getElementById("Aviz1_tr4_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==3) {
+                                        document.getElementById("c_inaptapt_temporar_1").checked=true;
+                                }else{  document.getElementById("c_inaptapt_temporar_1").checked=false;}
+                            tr=document.createElement("TR");tr.id="Aviz1_tr5";document.getElementById("Aviz1").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz1_tr5_c1";td.style.fontSize="18px";td.innerHTML="<b>INAPT:</b>";document.getElementById("Aviz1_tr5").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz1_tr5_c2";document.getElementById("Aviz1_tr5").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_inapt_1"; document.getElementById("Aviz1_tr5_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==4) {
+                                        document.getElementById("c_inapt_1").checked=true;
+                                }else{  document.getElementById("c_inapt_1").checked=false;}
+                        td=document.createElement("TD");td.id="Aviz_Recomandari1_tr1_c2";td.style.width="400px";document.getElementById("Aviz_Recomandari1_tr1").appendChild(td);
+                            div=document.createElement("div");div.id="recomandari1_l";div.style.width="400px";div.style.fontSize="20px";div.style.textAlign="center";div.innerHTML="<b>Recomandări</b>";document.getElementById("Aviz_Recomandari1_tr1_c2").appendChild(div);
+                            //a=document.createElement("br");document.getElementById("Aviz_Recomandari1_tr1_c2").appendChild(a);
+                            div=document.createElement("div");div.id="recomandari1";div.style.width="400px";div.style.fontSize="16px";div.style.height="180px";div.style.border="1px solid black";div.style.padding="10px";document.getElementById("Aviz_Recomandari1_tr1_c2").appendChild(div); //////////////////////////////// introducere date
+                                if (t_fise[17]=="Da") {document.getElementById("recomandari1").innerHTML=document.getElementById("recomandari1").innerHTML+" - cu lucru la înălțime </br>";}
+                                if (t_fise[17]=="Nu") {document.getElementById("recomandari1").innerHTML=document.getElementById("recomandari1").innerHTML+" - fără lucru la înălțime </br>";}
+                                if (t_fise[18]=="Da") {document.getElementById("recomandari1").innerHTML=document.getElementById("recomandari1").innerHTML+" - cu tură de noapte </br>";}
+                                if (t_fise[18]=="Nu") {document.getElementById("recomandari1").innerHTML=document.getElementById("recomandari1").innerHTML+" - fără tură de noapte </br>";}
+                                if (t_fise[19]=="Da") {document.getElementById("recomandari1").innerHTML=document.getElementById("recomandari1").innerHTML+" - cu auto </br>";}
+                                if (t_fise[19]=="Nu") {document.getElementById("recomandari1").innerHTML=document.getElementById("recomandari1").innerHTML+" - fără auto </br>";}
+                                document.getElementById("recomandari1").innerHTML=document.getElementById("recomandari1").innerHTML+t_fise[20];
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+                        
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="Data_Medic1";document.getElementById("celula1div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="Data_Medic1_tr1";document.getElementById("Data_Medic1").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Data_Medic1_tr1_c1";td.style.verticalAlign="bottom";td.style.width="338px";document.getElementById("Data_Medic1_tr1").appendChild(td);
+                            tabel=document.createElement('TABLE');tabel.style.width="150px";tabel.id="Data1";document.getElementById("Data_Medic1_tr1_c1").appendChild(tabel);
+                            tr=document.createElement("TR");tr.id="Data1_tr1";document.getElementById("Data1").appendChild(tr);         
+                                td=document.createElement("TD");td.id="Data1_tr1_c1";td.style.width="100px";td.style.fontSize="18px";td.innerHTML="Data: ";document.getElementById("Data1_tr1").appendChild(td);
+                                td=document.createElement("TD");td.id="Data1_tr1_c2";td.style.width="110px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.style.textAlign="center";document.getElementById("Data1_tr1").appendChild(td); //////////////////////////////// introducere date
+                                data=t_fise[21];
+                                anul=data.substr(0,data.indexOf("-"));
+                                data=data.substr(data.indexOf("-")+1,data.length);
+                                luna=data.substr(0,data.indexOf("-"));
+                                data=data.substr(data.indexOf("-")+1,data.length);
+                                ziua=data.substr(data.indexOf("-")+1,data.length);
+                                document.getElementById("Data1_tr1_c2").innerHTML=ziua+"."+luna+"."+anul;
+                        td=document.createElement("TD");td.id="Data_Medic1_tr1_c2";td.style.width="338px";document.getElementById("Data_Medic1_tr1").appendChild(td);
+                            tabel=document.createElement('TABLE');tabel.style.width="300px";tabel.id="Medic1";document.getElementById("Data_Medic1_tr1_c2").appendChild(tabel);
+                            tr=document.createElement("TR");tr.id="Medic1_tr1";document.getElementById("Medic1").appendChild(tr);         
+                                td=document.createElement("TD");td.id="Medic1_tr1_c1";td.style.fontSize="18px";td.innerHTML="Medic de medicina muncii ";td.style.textAlign="center";document.getElementById("Medic1_tr1").appendChild(td);
+                            tr=document.createElement("TR");tr.id="Medic1_tr2";document.getElementById("Medic1").appendChild(tr);  
+                                td=document.createElement("TD");td.id="Medic1_tr2_c1";td.style.fontSize="16px";td.innerHTML="(semnătura și parafa)";td.style.textAlign="center";document.getElementById("Medic1_tr2").appendChild(td);
+                            tr=document.createElement("TR");tr.id="Medic1_tr3";document.getElementById("Medic1").appendChild(tr);  
+                                td=document.createElement("TD");td.id="Medic1_tr3_c1";td.style.fontSize="18px";td.style.textAlign="center";document.getElementById("Medic1_tr3").appendChild(td); //////////////////////////////// introducere date
+                                document.getElementById("Medic1_tr3_c1").innerHTML=t_fise[22];
+                            tr=document.createElement("TR");tr.id="Medic1_tr5";document.getElementById("Medic1").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Medic1_tr5_c1";td.style.fontSize="18px";td.innerHTML="</br>";td.style.textAlign="center";td.style.borderBottom="1px solid black";document.getElementById("Medic1_tr5").appendChild(td); //////////////////////////////// introducere date
+                        a=document.createElement("br");document.getElementById("celula1div").appendChild(a);
+                        div=document.createElement("div");div.id="Data_Examen_urmator1";document.getElementById("celula1div").appendChild(div); //////////////////////////////// introducere date
+                               data=t_fise[23];
+                               anul=data.substr(0,data.indexOf("-"));
+                               data=data.substr(data.indexOf("-")+1,data.length);
+                               luna=data.substr(0,data.indexOf("-"));
+                               data=data.substr(data.indexOf("-")+1,data.length);
+                               ziua=data.substr(data.indexOf("-")+1,data.length);
+                        document.getElementById("Data_Examen_urmator1").innerHTML="Data următorului examen medical: "+ziua+"."+luna+"."+anul;
+                      
+                      
+                      
+                      
+                    div=document.createElement("div");div.id="celula2div";div.style.width="678px";document.getElementById("celula3").appendChild(div);
+                        tabel=document.createElement('TABLE');tabel.id="um2";document.getElementById("celula2div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="um2_tr1";document.getElementById("um2").appendChild(tr);
+                            td=document.createElement("TD");td.id="um2_tr1_c1";td.innerHTML="Unitatea medicală:";document.getElementById("um2_tr1").appendChild(td);
+                                tr=document.createElement("TR");tr.id="um2_tr2";document.getElementById("um2").appendChild(tr);
+                                    td=document.createElement("TD");td.id="um2_tr2_c1";td.innerHTML="Cabinet de medicina muncii:";document.getElementById("um2_tr2").appendChild(td);
+                                    td=document.createElement("TD");td.id="um2_tr2_c2";td.innerHTML="<b>&nbspSC Antibiotice SA</b>";document.getElementById("um2_tr2").appendChild(td);
+                                    td=document.createElement("TD");td.id="um2_tr2_c3";td.innerHTML="&nbsp&nbsp Am luat la cunoștință,&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";td.rowSpan=3;td.style.verticalAlign="top";td.style.border="1px solid black";td.style.borderLeft="1px solid black";td.style.borderRight="1px solid black";document.getElementById("um2_tr2").appendChild(td);
+                                tr=document.createElement("TR");tr.id="um2_tr3";document.getElementById("um2").appendChild(tr);
+                                    td=document.createElement("TD");td.id="um2_tr3_c1";td.innerHTML="Adresa:";document.getElementById("um2_tr3").appendChild(td);
+                                    td=document.createElement("TD");td.id="um2_tr3_c2";td.innerHTML="<b>&nbspIași, str. Valea Lupului nr 1 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>";document.getElementById("um2_tr3").appendChild(td);
+                                tr=document.createElement("TR");tr.id="um2_tr4";document.getElementById("um2").appendChild(tr);
+                                    td=document.createElement("TD");td.id="um2_tr4_c1";td.innerHTML="Telefon: &nbsp&nbsp&nbsp <b>023229000</b> &nbsp&nbsp Fax:";document.getElementById("um2_tr4").appendChild(td);
+                                    td=document.createElement("TD");td.id="um2_tr4_c2";td.innerHTML="<b>&nbsp023229633</b>";document.getElementById("um2_tr4").appendChild(td);
+                                    
+                                    
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+            
+                        
+                        tabel=document.createElement('TABLE');tabel.id="om2";document.getElementById("celula2div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="om2_tr1";tr.style.textAlign="right";tr.style.verticalAlign="center";document.getElementById("om2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="om2_tr1_c1";td.style.width="60px";td.innerHTML="Angajare";document.getElementById("om2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om2_tr1_c2";td.style.width="19px";document.getElementById("om2_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_2_1"; document.getElementById("om2_tr1_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[2]==1) {
+                                        document.getElementById("c_2_1").checked=true;
+                                }else{  document.getElementById("c_2_1").checked=false;}
+                        td=document.createElement("TD");td.id="om2_tr1_c3";td.style.width="96px";td.innerHTML="Control medical";document.getElementById("om2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om2_tr1_c4";td.style.width="19px";document.getElementById("om2_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_2_2"; document.getElementById("om2_tr1_c4").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[3]==1) {
+                                        document.getElementById("c_2_2").checked=true;
+                                }else{  document.getElementById("c_2_2").checked=false;}
+                        td=document.createElement("TD");td.id="om2_tr1_c5";td.style.width="96px";td.innerHTML="Adaptare";document.getElementById("om2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om2_tr1_c6";td.style.width="19px";document.getElementById("om2_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_2_3"; document.getElementById("om2_tr1_c6").appendChild(a);    //////////////////////////////// introducere date
+                                if (t_fise[4]==1) {
+                                        document.getElementById("c_2_3").checked=true;
+                                }else{  document.getElementById("c_2_3").checked=false;}
+                        td=document.createElement("TD");td.id="om2_tr1_c7";td.style.width="96px";td.innerHTML="Reluare a muncii";document.getElementById("om2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om2_tr1_c8";td.style.width="19px";document.getElementById("om2_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_2_4"; document.getElementById("om2_tr1_c8").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[5]==1) {
+                                        document.getElementById("c_2_4").checked=true;
+                                }else{  document.getElementById("c_2_4").checked=false;}
+                        td=document.createElement("TD");td.id="om2_tr1_c9";td.style.width="96px";td.innerHTML="Supraveghere specială";document.getElementById("om2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om2_tr1_c10";td.style.width="19px";document.getElementById("om2_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_2_5"; document.getElementById("om2_tr1_c10").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[6]==1) {
+                                        document.getElementById("c_2_5").checked=true;
+                                }else{  document.getElementById("c_2_5").checked=false;}
+                        td=document.createElement("TD");td.id="om2_tr1_c11";td.style.width="96px";td.innerHTML="Altele";document.getElementById("om2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="om2_tr1_c12";td.style.width="19px";document.getElementById("om2_tr1").appendChild(td);
+                             a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_2_6"; document.getElementById("om2_tr1_c12").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[7]==1) {
+                                        document.getElementById("c_2_6").checked=true;
+                                }else{  document.getElementById("c_2_6").checked=false;}
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+            
+                        
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="titlu2";document.getElementById("celula2div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="titlu2_tr1";document.getElementById("titlu2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="titlu2_tr1_c1";td.innerHTML="Medicina muncii";document.getElementById("titlu2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="titlu2_tr1_c2";td.style.fontSize="24px";td.innerHTML="<b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- FIȘĂ DE APTITUDINE</b>";document.getElementById("titlu2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="titlu2_tr1_c3";td.style.fontSize="20px";td.innerHTML="nr. "+t_fise[8]+"/"+t_fise[9];document.getElementById("titlu2_tr1").appendChild(td); //////////////////////////////// introducere date
+             
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+                        
+                        div=document.createElement("div");div.id="comentariu_unexemplar2";div.style.width="678px";div.style.textAlign="center";div.innerHTML="<I>( Un exemplar se transmite la angajator, unul se înmânează angajatului )</I>";document.getElementById("celula2div").appendChild(div);
+            
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+                        
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="soc2";document.getElementById("celula2div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="soc2_tr1";document.getElementById("soc2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="soc2_tr1_c1";td.style.width="100px";td.style.fontSize="18px";td.innerHTML="<b>Societatea:</b>";document.getElementById("soc2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="soc2_tr1_c2";td.style.fontSize="20px";td.colSpan=3;td.style.borderBottom="1px solid black";td.innerHTML="S.C. Antibiotice S.A.";document.getElementById("soc2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="soc2_tr1_c3";document.getElementById("soc2_tr1").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc2_tr1_c4";document.getElementById("soc2_tr1").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc2_tr1_c5";document.getElementById("soc2_tr1").appendChild(td);
+                        
+                        tr=document.createElement("TR");tr.id="soc2_tr2";document.getElementById("soc2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="soc2_tr2_c1";td.style.fontSize="20px";td.innerHTML="<b>Adresa:</b>";document.getElementById("soc2_tr2").appendChild(td);
+                        td=document.createElement("TD");td.id="soc2_tr2_c2";td.style.fontSize="20px";td.colSpan=3;td.style.borderBottom="1px solid black";td.innerHTML="Iasi, str. Valea Lupului nr 1.";document.getElementById("soc2_tr2").appendChild(td);
+                        td=document.createElement("TD");td.id="soc2_tr2_c3";document.getElementById("soc2_tr2").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc2_tr2_c4";document.getElementById("soc2_tr2").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc2_tr2_c5";document.getElementById("soc2_tr2").appendChild(td); 
+                        
+                        tr=document.createElement("TR");tr.id="soc2_tr3";document.getElementById("soc2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="soc2_tr3_c1";td.style.fontSize="20px";td.innerHTML="<b>Telefon:</b>";document.getElementById("soc2_tr3").appendChild(td);
+                        td=document.createElement("TD");td.id="soc2_tr3_c2";td.style.fontSize="20px";td.style.width="110px";td.style.borderBottom="1px solid black";td.innerHTML="0232209000";document.getElementById("soc2_tr3").appendChild(td);
+                        td=document.createElement("TD");td.id="soc2_tr3_c3";td.style.fontSize="20px";td.style.width="50px";td.style.textAlign="center";td.innerHTML="<b>Fax:</b>";document.getElementById("soc2_tr3").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc2_tr3_c4";td.style.fontSize="20px";td.style.width="110px";td.style.borderBottom="1px solid black";td.innerHTML="0232209633";document.getElementById("soc2_tr3").appendChild(td); 
+                        td=document.createElement("TD");td.id="soc2_tr3_c5";document.getElementById("soc2_tr3").appendChild(td); 
+                        
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+            
+                        div=document.createElement("div");div.id="inf_persoana2";div.style.width="678px";div.style.border="2px solid black";document.getElementById("celula2div").appendChild(div);
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="nume_pren2";document.getElementById("inf_persoana2").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="nume_pren2_tr1";document.getElementById("nume_pren2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="nume_pren2_tr1_c1";td.style.width="50px";td.style.fontSize="18px";td.innerHTML="Nume:";document.getElementById("nume_pren2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="nume_pren2_tr1_c2";td.style.width="250px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[11]+"</b>";document.getElementById("nume_pren2_tr1").appendChild(td); //////////////////////////////// introducere date
+                        td=document.createElement("TD");td.id="nume_pren2_tr1_c3";td.style.width="50px";td.style.fontSize="18px";td.innerHTML="Prenume:";document.getElementById("nume_pren2_tr1").appendChild(td); 
+                        td=document.createElement("TD");td.id="nume_pren2_tr1_c4";td.style.width="250px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[12]+"</b>";document.getElementById("nume_pren2_tr1").appendChild(td); //////////////////////////////// introducere date
+            
+                        tabel=document.createElement('TABLE');tabel.style.width="320px";tabel.id="CNP2";document.getElementById("inf_persoana2").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="CNP2_tr1";document.getElementById("CNP2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="CNP2_tr1_c1";td.style.width="240px";td.style.fontSize="18px";td.innerHTML="Cod numeric personal:";document.getElementById("CNP2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="CNP2_tr1_c2";td.style.width="160px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[13]+"</b>";document.getElementById("CNP2_tr1").appendChild(td); //////////////////////////////// introducere date
+                 
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="Functie_Loc2";document.getElementById("inf_persoana2").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="Functie_Loc2_tr1";document.getElementById("Functie_Loc2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Functie_Loc2_tr1_c1";td.style.width="120px";td.style.fontSize="18px";td.innerHTML="Functia:";document.getElementById("Functie_Loc2_tr1").appendChild(td);
+                        td=document.createElement("TD");td.id="Functie_Loc2_tr1_c2";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[14]+"</b>";document.getElementById("Functie_Loc2_tr1").appendChild(td); //////////////////////////////// introducere date
+                        tr=document.createElement("TR");tr.id="Functie_Loc2_tr2";document.getElementById("Functie_Loc2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Functie_Loc2_tr2_c1";td.style.width="160px";td.style.fontSize="18px";td.innerHTML="Locul de muncă:";document.getElementById("Functie_Loc2_tr2").appendChild(td);
+                        td=document.createElement("TD");td.id="Functie_Loc2_tr2_c2";td.style.fontSize="16px";td.style.borderBottom="1px solid black";td.innerHTML="<b>"+t_fise[15]+"</b>";document.getElementById("Functie_Loc2_tr2").appendChild(td); //////////////////////////////// introducere date
+                        
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="Aviz_Recomandari2";document.getElementById("celula2div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="Aviz_Recomandari2_tr1";document.getElementById("Aviz_Recomandari2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Aviz_Recomandari2_tr1_c1";td.style.width="338px";document.getElementById("Aviz_Recomandari2_tr1").appendChild(td);
+                            tabel=document.createElement('TABLE');tabel.style.width="230px";tabel.id="Aviz2";document.getElementById("Aviz_Recomandari2_tr1_c1").appendChild(tabel);
+                            tr=document.createElement("TR");tr.id="Aviz2_tr1";document.getElementById("Aviz2").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz2_tr1_c1";td.style.fontSize="20px";td.innerHTML="<b>AVIZ MEDICAL:</b>";document.getElementById("Aviz2_tr1").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz2_tr1_c2";document.getElementById("Aviz2_tr1").appendChild(td);
+                            tr=document.createElement("TR");tr.id="Aviz2_tr2";document.getElementById("Aviz2").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz2_tr2_c1";td.style.fontSize="18px";td.innerHTML="<b>APT:</b>";document.getElementById("Aviz2_tr2").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz2_tr2_c2";document.getElementById("Aviz2_tr2").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_apt_2"; document.getElementById("Aviz2_tr2_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==1) {
+                                        document.getElementById("c_apt_2").checked=true;
+                                }else{  document.getElementById("c_apt_2").checked=false;}
+                            tr=document.createElement("TR");tr.id="Aviz2_tr3";document.getElementById("Aviz2").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz2_tr3_c1";td.style.fontSize="18px";td.innerHTML="<b>APT CONDITIONAT:</b>";document.getElementById("Aviz2_tr3").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz2_tr3_c2";document.getElementById("Aviz2_tr3").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_apt_cond_2"; document.getElementById("Aviz2_tr3_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==2) {
+                                        document.getElementById("c_apt_cond_2").checked=true;
+                                }else{  document.getElementById("c_apt_cond_2").checked=false;}
+                            tr=document.createElement("TR");tr.id="Aviz2_tr4";document.getElementById("Aviz2").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz2_tr4_c1";td.style.fontSize="18px";td.innerHTML="<b>INAPT TEMPORAR:</b>";document.getElementById("Aviz2_tr4").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz2_tr4_c2";document.getElementById("Aviz2_tr4").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_inaptapt_temporar_2"; document.getElementById("Aviz2_tr4_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==3) {
+                                        document.getElementById("c_inaptapt_temporar_2").checked=true;
+                                }else{  document.getElementById("c_inaptapt_temporar_2").checked=false;}
+                            tr=document.createElement("TR");tr.id="Aviz2_tr5";document.getElementById("Aviz2").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Aviz2_tr5_c1";td.style.fontSize="18px";td.innerHTML="<b>INAPT:</b>";document.getElementById("Aviz2_tr5").appendChild(td);
+                                td=document.createElement("TD");td.id="Aviz2_tr5_c2";document.getElementById("Aviz2_tr5").appendChild(td);
+                                a=document.createElement('input');a.type="checkbox"; a.style.width="17px"; a.style.height="17px"; a.id="c_inapt_2"; document.getElementById("Aviz2_tr5_c2").appendChild(a);   //////////////////////////////// introducere date
+                                if (t_fise[16]==4) {
+                                        document.getElementById("c_inapt_2").checked=true;
+                                }else{  document.getElementById("c_inapt_2").checked=false;}
+                        td=document.createElement("TD");td.id="Aviz_Recomandari2_tr1_c2";td.style.width="400px";document.getElementById("Aviz_Recomandari2_tr1").appendChild(td);
+                            div=document.createElement("div");div.id="recomandari2_l";div.style.width="400px";div.style.fontSize="20px";div.style.textAlign="center";div.innerHTML="<b>Recomandări</b>";document.getElementById("Aviz_Recomandari2_tr1_c2").appendChild(div);
+                           // a=document.createElement("br");document.getElementById("Aviz_Recomandari2_tr1_c2").appendChild(a);
+                            div=document.createElement("div");div.id="recomandari2";div.style.width="400px";div.style.fontSize="16px";div.style.height="180px";div.style.border="1px solid black";div.style.padding="10px";document.getElementById("Aviz_Recomandari2_tr1_c2").appendChild(div); //////////////////////////////// introducere date
+                                if (t_fise[17]=="Da") {document.getElementById("recomandari2").innerHTML=document.getElementById("recomandari2").innerHTML+" - cu lucru la înălțime </br>";}
+                                if (t_fise[17]=="Nu") {document.getElementById("recomandari2").innerHTML=document.getElementById("recomandari2").innerHTML+" - fără lucru la înălțime </br>";}
+                                if (t_fise[18]=="Da") {document.getElementById("recomandari2").innerHTML=document.getElementById("recomandari2").innerHTML+" - cu tură de noapte </br>";}
+                                if (t_fise[18]=="Nu") {document.getElementById("recomandari2").innerHTML=document.getElementById("recomandari2").innerHTML+" - fără tură de noapte </br>";}
+                                if (t_fise[19]=="Da") {document.getElementById("recomandari2").innerHTML=document.getElementById("recomandari2").innerHTML+" - cu auto </br>";}
+                                if (t_fise[19]=="Nu") {document.getElementById("recomandari2").innerHTML=document.getElementById("recomandari2").innerHTML+" - fără auto </br>";}
+                                document.getElementById("recomandari2").innerHTML=document.getElementById("recomandari2").innerHTML+t_fise[20];
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+                        tabel=document.createElement('TABLE');tabel.style.width="676px";tabel.id="Data_Medic2";document.getElementById("celula2div").appendChild(tabel);
+                        tr=document.createElement("TR");tr.id="Data_Medic2_tr1";document.getElementById("Data_Medic2").appendChild(tr);         
+                        td=document.createElement("TD");td.id="Data_Medic2_tr1_c1";td.style.verticalAlign="bottom";td.style.width="338px";document.getElementById("Data_Medic2_tr1").appendChild(td);
+                            tabel=document.createElement('TABLE');tabel.style.width="150px";tabel.id="Data2";document.getElementById("Data_Medic2_tr1_c1").appendChild(tabel);
+                            tr=document.createElement("TR");tr.id="Data2_tr1";document.getElementById("Data2").appendChild(tr);         
+                                td=document.createElement("TD");td.id="Data2_tr1_c1";td.style.width="100px";td.style.fontSize="18px";td.innerHTML="Data: ";document.getElementById("Data2_tr1").appendChild(td);
+                                td=document.createElement("TD");td.id="Data2_tr1_c2";td.style.width="100px";td.style.fontSize="18px";td.style.borderBottom="1px solid black";td.style.textAlign="center";td.innerHTML="19.11.2021 ";document.getElementById("Data2_tr1").appendChild(td); // introducere date
+                                data=t_fise[21];
+                                anul=data.substr(0,data.indexOf("-"));
+                                data=data.substr(data.indexOf("-")+1,data.length);
+                                luna=data.substr(0,data.indexOf("-"));
+                                data=data.substr(data.indexOf("-")+1,data.length);
+                                ziua=data.substr(data.indexOf("-")+1,data.length);
+                                document.getElementById("Data2_tr1_c2").innerHTML=ziua+"."+luna+"."+anul;
+                        td=document.createElement("TD");td.id="Data_Medic2_tr1_c2";td.style.width="338px";document.getElementById("Data_Medic2_tr1").appendChild(td);
+                            tabel=document.createElement('TABLE');tabel.style.width="300px";tabel.id="Medic2";document.getElementById("Data_Medic2_tr1_c2").appendChild(tabel);
+                            tr=document.createElement("TR");tr.id="Medic2_tr1";document.getElementById("Medic2").appendChild(tr);         
+                                td=document.createElement("TD");td.id="Medic2_tr1_c1";td.style.fontSize="18px";td.innerHTML="Medic de medicina muncii ";td.style.textAlign="center";document.getElementById("Medic2_tr1").appendChild(td);
+                            tr=document.createElement("TR");tr.id="Medic2_tr2";document.getElementById("Medic2").appendChild(tr);  
+                                td=document.createElement("TD");td.id="Medic2_tr2_c1";td.style.fontSize="16px";td.innerHTML="(semnătura și parafa)";td.style.textAlign="center";document.getElementById("Medic2_tr2").appendChild(td);
+                            tr=document.createElement("TR");tr.id="Medic2_tr3";document.getElementById("Medic2").appendChild(tr);  
+                                td=document.createElement("TD");td.id="Medic2_tr3_c1";td.style.fontSize="18px";td.innerHTML="Ursache Gabriela";td.style.textAlign="center";document.getElementById("Medic2_tr3").appendChild(td); //introducere date
+                                document.getElementById("Medic2_tr3_c1").innerHTML=t_fise[22];
+                            //tr=document.createElement("TR");tr.id="Medic2_tr4";document.getElementById("Medic2").appendChild(tr); 
+                                //td=document.createElement("TD");td.id="Medic2_tr4_c1";td.style.fontSize="18px";td.innerHTML="</br>";td.style.textAlign="center";document.getElementById("Medic2_tr4").appendChild(td); //introducere date
+                            tr=document.createElement("TR");tr.id="Medic2_tr5";document.getElementById("Medic2").appendChild(tr); 
+                                td=document.createElement("TD");td.id="Medic2_tr5_c1";td.style.fontSize="18px";td.innerHTML="</br>";td.style.textAlign="center";td.style.borderBottom="1px solid black";document.getElementById("Medic2_tr5").appendChild(td); // introducere date
+                        a=document.createElement("br");document.getElementById("celula2div").appendChild(a);
+                        div=document.createElement("div");div.id="Data_Examen_urmator2";document.getElementById("celula2div").appendChild(div); // introducere date
+                        data=t_fise[23];
+                        anul=data.substr(0,data.indexOf("-"));
+                        data=data.substr(data.indexOf("-")+1,data.length);
+                        luna=data.substr(0,data.indexOf("-"));
+                        data=data.substr(data.indexOf("-")+1,data.length);
+                        ziua=data.substr(data.indexOf("-")+1,data.length);
+                        document.getElementById("Data_Examen_urmator2").innerHTML="Data următorului examen medical: "+ziua+"."+luna+"."+anul;
+                   
+                } else{alert("Nu exista fisa de aptitudini mentionata in baza de date.");}                      
+              }
+        };                                                             
+        xf.open("POST","fisaaptitudinedelistat.php",true);
+        xf.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+        xf.send("cheie_f="+cheie_f);
+
+          
+</script>                                    
+</body>
+</html>

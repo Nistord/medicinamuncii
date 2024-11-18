@@ -1,0 +1,13 @@
+
+#div_filtre{
+  background-image: url("logo/fundalpicaturi.png");
+  position:absolute;
+  z-index=999;  
+  color: rgb(30, 85, 55);
+  font-size:0.85rem;
+  font-weight:bold;
+}
+
+td{
+    padding:0.3rem;
+}

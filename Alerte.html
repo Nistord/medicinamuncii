@@ -1,0 +1,526 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<style>
+    html {
+    background-image: url('logo/albfundal.png');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    }
+    #loadingMessage {
+        display: none; 
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        background: rgba(10,10,10,10.7); 
+        color: white; 
+        padding: 20px; 
+        border-radius: 5px;
+        z-index: 1002; /* Mesajul este deasupra overlay-ului */
+    }
+    #overlay {
+        display: none; 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background: rgba(100,100,100,100.5);
+        z-index: 1001; /* Overlay-ul este deasupra altor elemente */
+    }
+</style>
+
+<head>
+    <title>alerte</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <link rel="stylesheet" href="LogoIndex.css">
+    <link rel="stylesheet" type="text/css" href="Alerte.css">
+    
+</head>
+<body>
+<script src="LogareMeniu.js"></script>
+<script type="application/x-javascript" charset="UTF-8">
+tprez=[];  
+  //identific din cooki-uri marca persoanei care s-a logat
+  ecm=document.cookie;
+  ecm=ecm.substr(ecm.indexOf("Marc")+5,ecm.length);
+  ecm=ecm.substr(0,ecm.indexOf(";"));
+    
+     //verific drepturile persoanei
+     //mai intai verific ecm-ul - daca persoana s-a logat
+    var xdrept=new XMLHttpRequest();
+    xdrept.onreadystatechange=function(){
+       if (xdrept.readyState==4 && xdrept.status==200){
+             if(xdrept.responseText=="Exista dreptul."){
+                    tip="";
+                    ok="";
+                    //generez 4 div-uri in care se vor regasi bolile cronice, concediile de boala, urgentele SI FISELE DE APTITUDINI
+                    //mai intai generez un div in care voi avea un tabel cu 8 celule prin care se vor afisa sau ascunde div-urile de lucru
+                            div=document.createElement("div");div.id="spatiu1";div.style.height="30px";document.body.appendChild(div);
+                            div=document.createElement("div");div.id="meniu_alerte_div";document.body.appendChild(div);
+                                tabel=document.createElement('TABLE');
+                                tabel.id="meniu_alerte";
+                                tabel.name="meniu_alerte";
+                                tabel.classList.add("table");
+                                document.getElementById("meniu_alerte_div").appendChild(tabel);
+                                        
+                                tr=document.createElement("TR");
+                                tr.id="tr_alerte";
+                                tr.name="tr_alerte";
+                                tr.className = "tabel_header_m";
+                                document.getElementById("meniu_alerte").appendChild(tr);
+                                        
+                                th=document.createElement("TH");th.id="th_alerte_[0]";th.name="th_alerte_[0]";th.style.cursor="pointer";
+                                th.onclick=function(){
+                                    document.getElementById('Modificari_si_noi_angajati').style.display = 'block';
+                                    document.getElementById('Expirari_fise_aptitudini').style.display = 'none';
+                                    tip="Nerezolvate";
+                                    genereaza_tabel_modificari(tip);
+                                    document.getElementById("th_alerte_[2]").style.backgroundColor=initialColor;Out2('th_alerte_[2]');
+                                    };
+                                th.onmouseenter=function(){document.getElementById("th_alerte_[0]").style.backgroundColor="#f7faf2";Intra2('th_alerte_[0]',27,8);}; //initialColor=document.getElementById("th_alerte_[0]").style.backgroundColor;
+                                th.onmouseout=function(){
+                                        if (document.getElementById('Modificari_si_noi_angajati').style.display !== 'block') {
+                                           document.getElementById("th_alerte_[0]").style.backgroundColor=initialColor;Out2('th_alerte_[0]');                                       
+                                        } else{
+                                           document.getElementById("th_alerte_[2]").style.backgroundColor=initialColor;Out2('th_alerte_[2]');
+                                        }
+                                    };
+                                th.innerHTML="Modificari si noi angajati";document.getElementById("tr_alerte").appendChild(th);
+                                                                                 
+                                th=document.createElement("TH");th.id="th_alerte_[1]";th.name="th_alerte_[1]";document.getElementById("tr_alerte").appendChild(th);
+                                                                                 
+                                th=document.createElement("TH");th.id="th_alerte_[2]";th.name="th_alerte_[2]";th.style.cursor="pointer";
+                                th.onclick=function(){
+                                    document.getElementById('Modificari_si_noi_angajati').style.display='none';
+                                    document.getElementById('Expirari_fise_aptitudini').style.display='block';
+                                    document.getElementById("th_alerte_[0]").style.backgroundColor=initialColor;Out2('th_alerte_[0]');   
+                                    };
+                                th.onmouseenter=function(){document.getElementById("th_alerte_[2]").style.backgroundColor="#f7faf2";Intra2('th_alerte_[2]',27,8);}; //initialColor=document.getElementById("th_alerte_[2]").style.backgroundColor;
+                                th.onmouseout=function(){
+                                        if (document.getElementById('Expirari_fise_aptitudini').style.display !== 'block') {
+                                              document.getElementById("th_alerte_[2]").style.backgroundColor=initialColor;Out2('th_alerte_[2]');
+                                            }else{
+                                              document.getElementById("th_alerte_[0]").style.backgroundColor=initialColor;Out2('th_alerte_[0]');     
+                                            }
+                                    };
+                                th.innerHTML="Expirari fise de aptitudini";document.getElementById("tr_alerte").appendChild(th);
+                                initialColor=document.getElementById("th_alerte_[2]").style.backgroundColor;
+                                                                                 
+                                th=document.createElement("TH");th.id="th_alerte_[3]";th.name="th_alerte_[3]";document.getElementById("tr_alerte").appendChild(th);
+                                //introduc un div intermediar pentru un spatiu la afisare
+                                div=document.createElement("div");div.id="spatiu";div.style.width="20px";div.style.height="20px";document.body.appendChild(div);
+                    
+                    
+                                //intorc din baza de date modificarile si noii angajati
+                                div=document.createElement("div");div.id="Modificari_si_noi_angajati";div.style.display='none';document.body.appendChild(div);
+                                
+                                //buton pentru nesolutionate / solutionate
+                                div=document.createElement("div");div.id="Selectie_nesolutionate_solutionate";document.getElementById("Modificari_si_noi_angajati").appendChild(div);
+                                div=document.createElement("div");div.id="Pt_marca";div.innerHTML="Specificati <b> marca salariatului: </b>";document.getElementById("Selectie_nesolutionate_solutionate").appendChild(div);
+                                a=document.createElement("input");a.type="text";a.id="marca";a.style.width="3rem";document.getElementById("Pt_marca").appendChild(a);
+                                document.getElementById("Pt_marca").innerHTML=document.getElementById("Pt_marca").innerHTML+" pentru care doriti sa fie afisate modificarile solutionate. In cazul in care lipseste informatia, se vor afisa ultimele 500 de solutionari.";
+                                tabel=document.createElement('TABLE');tabel.id="selectie_n_s";tabel.classList.add("table");document.getElementById("Selectie_nesolutionate_solutionate").appendChild(tabel);
+                                tr=document.createElement("TR");tr.id="tr_n_s";document.getElementById("selectie_n_s").appendChild(tr);
+                                td=document.createElement("TD");td.id="tr_ns1";document.getElementById("tr_n_s").appendChild(td);
+                                td=document.createElement("TD");td.id="tr_ns2";document.getElementById("tr_n_s").appendChild(td);
+                                td=document.createElement("TD");td.id="tr_ns3";document.getElementById("tr_n_s").appendChild(td);
+                                td=document.createElement("TD");td.id="tr_ns4";document.getElementById("tr_n_s").appendChild(td);
+                                
+                                a=document.createElement("input");a.type="submit";a.id="B_Nesolutionate";a.value="Nesolutionate";
+                                a.className="button is-focused is-rounded is-small has-text-link has-text-weight-bold";
+                                a.onclick=function(){document.getElementById("B_Nesolutionate").className="button is-focused is-rounded is-small has-text-link has-text-weight-bold";
+                                                     document.getElementById("B_Solutionate").className="button is-rounded is-small has-text-black has-text-weight-bold";
+                                                     tip="Nerezolvate";
+                                                     genereaza_tabel_modificari(tip);
+                                };
+                                document.getElementById("tr_ns1").appendChild(a);
+                    
+                    
+                                a=document.createElement("input");a.type="submit";a.id="B_Solutionate";a.value="Solutionate";
+                                a.className="button is-rounded is-small has-text-black has-text-weight-bold";
+                                a.onclick=function(){document.getElementById("B_Nesolutionate").className="button is-rounded is-small has-text-black has-text-weight-bold";
+                                                     document.getElementById("B_Solutionate").className="button is-focused is-rounded is-small has-text-link has-text-weight-bold";
+                                                     tip="Rezolvate"; 
+                                                     genereaza_tabel_modificari(tip);
+                                };
+                                document.getElementById("tr_ns3").appendChild(a);
+                                a=document.createElement("label");a.id="l_nu_exista_modif";document.getElementById("tr_ns3").appendChild(a);
+                                
+                                
+                                
+                                //intorc din baza de date modificarile si noii angajati
+                                div=document.createElement("div");div.id="Expirari_fise_aptitudini";div.style.display='none';document.body.appendChild(div);
+                                genereaza_tabel_fise();
+
+
+             }else{alert("La momentul actual nu aveti access pe pagina " + document.title + "!");}
+       }
+    };                                                             
+    xdrept.open("POST","Alerte.php",true);
+    xdrept.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+    xdrept.send("ecm="+ecm+"&pagina="+document.title);   //verific daca are drepturi pe pagina   
+    
+div=document.createElement("div");div.id="overlay";document.body.appendChild(div);    
+div=document.createElement("div");div.id="loadingMessage";document.body.appendChild(div);
+div=document.createElement("div");div.id="X_loadingMessage";div.style.backgroundColor="#f7faf2";div.style.width="30px";div.style.height="30px"; div.style.top = "5px"; div.style.left = "-35px"; div.style.textAlign="center";div.style.position="relative";//div.style.left = "565px"; div.style.left = "calc(100% - 40px)"
+div.style.cssFloat="right";div.style.zIndex="1002";div.innerHTML="X";
+div.onclick=function(){
+    document.getElementById("overlay").style.display='none'; //daca se apasa pe x, tabela de introducere a bolilor se ascunde
+    document.getElementById("loadingMessage").style.display='none'; //daca se apasa pe x, tabela de introducere a bolilor se ascunde
+};
+document.getElementById("overlay").appendChild(div);
+
+    
+function genereaza_tabel_modificari(tip){
+    if (document.getElementById("marca")) {
+        marca=parseInt(document.getElementById("marca").value);
+    }else{marca="";}
+        var xm=new XMLHttpRequest();
+        xm.onreadystatechange=function(){
+            if (xm.readyState==4 && xm.status==200){
+                if (xm.responseText!=="Nu exista") {
+                        document.getElementById("l_nu_exista_modif").innerHTML="";
+                        modif=JSON.parse(atob(decodeURIComponent(xm.responseText)));
+                        //generez tabelul cu fisele de aptitudini aferente salariatului selectat
+                        if (document.getElementById("t_m")) {document.getElementById("t_m").remove();}
+                                    //generez tabelul
+                                    tabel=document.createElement('TABLE');
+                                    tabel.id="t_m";
+                                    tabel.name="t_m";
+                                    tabel.classList.add("table", "is-striped", "is-bordered", "is-hoverable", "$table-row-hover-background-color");
+                                    tabel.style.border="1px solid black";
+                                    tabel.style.borderCollapse="collapse";
+                                    document.getElementById("Modificari_si_noi_angajati").appendChild(tabel);
+                                                                                    
+            
+                                    tr=document.createElement("TR");
+                                    tr.id="tr_m_00";
+                                    tr.name="tr_m_00";
+                                    tr.className = "tabel_header";
+                                    tr.style.border="1px solid black";
+                                    document.getElementById("t_m").appendChild(tr);
+                                                                                    
+                                    th=document.createElement("TH");th.id="th_m_[0]";th.name="th_m_[0]";th.style.border="1px solid black";th.innerHTML="Nume actual";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[1]";th.name="th_m_[1]";th.style.border="1px solid black";th.innerHTML="Cheie";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[2]";th.name="th_m_[2]";th.style.border="1px solid black";th.innerHTML="Marca";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[3]";th.name="th_m_[3]";th.style.border="1px solid black";th.innerHTML="NPrenume";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[4]";th.name="th_m_[4]";th.style.border="1px solid black";th.innerHTML="Functia";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[5]";th.name="th_m_[5]";th.style.border="1px solid black";th.innerHTML="Situatie CIM";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[6]";th.name="th_m_[6]";th.style.border="1px solid black";th.innerHTML="Rezolvat";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[7]";th.name="th_m_[7]";th.style.border="1px solid black";th.innerHTML="S1";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[8]";th.name="th_m_[8]";th.style.border="1px solid black";th.innerHTML="S2";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[9]";th.name="th_m_[9]";th.style.border="1px solid black";th.innerHTML="S3";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[10]";th.name="th_m_[10]";th.style.border="1px solid black";th.innerHTML="S4";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[11]";th.name="th_m_[11]";th.style.border="1px solid black";th.innerHTML="S5";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[12]";th.name="th_m_[12]";th.style.border="1px solid black";th.innerHTML="S6";document.getElementById("tr_m_00").appendChild(th); 
+                                    //th=document.createElement("TH");th.id="th_m_[13]";th.name="th_m_[13]";th.style.border="1px solid black";th.innerHTML="S7";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[14]";th.name="th_m_[14]";th.style.border="1px solid black";th.innerHTML="S8";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[15]";th.name="th_m_[15]";th.style.border="1px solid black";th.innerHTML="S9";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[16]";th.name="th_m_[16]";th.style.border="1px solid black";th.innerHTML="S10";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[17]";th.name="th_m_[17]";th.style.border="1px solid black";th.innerHTML="S11";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[18]";th.name="th_m_[18]";th.style.border="1px solid black";th.innerHTML="S12";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[19]";th.name="th_m_[19]";th.style.border="1px solid black";th.innerHTML="Salariat Nou";document.getElementById("tr_m_00").appendChild(th);
+                                    //th=document.createElement("TH");th.id="th_m_[20]";th.name="th_m_[20]";th.style.border="1px solid black";th.innerHTML="Data Salvare";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[21]";th.name="th_m_[21]";th.style.border="1px solid black";th.innerHTML="Rezolvat";document.getElementById("tr_m_00").appendChild(th);
+                                    th=document.createElement("TH");th.id="th_m_[22]";th.name="th_m_[22]";th.style.border="1px solid black";th.innerHTML="Afiseaza trecut vs prezent";document.getElementById("tr_m_00").appendChild(th);
+                                  for (i=0;i<modif.length;i++) { ///////////// daca se reampart nr de venituri per coloana atunci se modifica si aici
+                                      tr=document.createElement("TR");tr.id="tr_m_"+i;tr.name="tr_m_"+i;tr.style.border="1px solid black";
+                                      tr.className = "tabel_linie";document.getElementById("t_m").appendChild(tr);
+                                      td=document.createElement("TD");td.id="["+i+"]_[0]_m";td.name="["+i+"]_[0]_m";td.innerHTML=modif[i][0];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[1]_m";td.name="["+i+"]_[1]_m";td.innerHTML=modif[i][1];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[2]_m";td.name="["+i+"]_[2]_m";td.innerHTML=modif[i][2];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[3]_m";td.name="["+i+"]_[3]_m";td.innerHTML=modif[i][3];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[4]_m";td.name="["+i+"]_[4]_m";td.innerHTML=modif[i][4];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[5]_m";td.name="["+i+"]_[5]_m";td.innerHTML=modif[i][5];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[6]_m";td.name="["+i+"]_[6]_m";
+                                    
+                                      td=document.createElement("TD");td.id="["+i+"]_[7]_m";td.name="["+i+"]_[7]_m";td.innerHTML=modif[i][7];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[8]_m";td.name="["+i+"]_[8]_m";td.innerHTML=modif[i][8];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[9]_m";td.name="["+i+"]_[9]_m";td.innerHTML=modif[i][9];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[10]_m";td.name="["+i+"]_[10]_m";td.innerHTML=modif[i][10];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[11]_m";td.name="["+i+"]_[11]_m";td.innerHTML=modif[i][11];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[12]_m";td.name="["+i+"]_[12]_m";td.innerHTML=modif[i][12];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[13]_m";td.name="["+i+"]_[13]_m";td.innerHTML=modif[i][13];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[14]_m";td.name="["+i+"]_[14]_m";td.innerHTML=modif[i][14];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[15]_m";td.name="["+i+"]_[15]_m";td.innerHTML=modif[i][15];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[16]_m";td.name="["+i+"]_[16]_m";td.innerHTML=modif[i][16];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[17]_m";td.name="["+i+"]_[17]_m";td.innerHTML=modif[i][17];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[18]_m";td.name="["+i+"]_[18]_m";td.innerHTML=modif[i][18];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[19]_m";td.name="["+i+"]_[19]_m";td.innerHTML=modif[i][19];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      //td=document.createElement("TD");td.id="["+i+"]_[20]_m";td.name="["+i+"]_[20]_m";td.innerHTML=modif[i][20];td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      td=document.createElement("TD");td.id="["+i+"]_[21]_m";td.name="["+i+"]_[21]_m";td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      a=document.createElement("input");a.type="submit";a.id="StareSolutionare_"+i;a.className="button is-rounded is-small has-text-black has-text-weight-bold";
+                                      a.onmouseenter=function(){document.getElementById(event.target.id).className="button is-focused is-rounded is-small has-text-link has-text-weight-bold";};
+                                      a.onmouseleave=function(){document.getElementById(event.target.id).className="button is-rounded is-small has-text-black has-text-weight-bold";};
+                                      a.onclick=function(){
+                                             //indentific cheia
+                                                //extrag numarul liniei
+                                                idul=event.target.parentElement.parentElement.id;
+                                                idul=idul.substr(idul.indexOf("_")+1,event.target.parentElement.id.length);
+                                                idul=idul.substr(idul.indexOf("_")+1,event.target.parentElement.id.length);
+                                                cheie_m=parseInt(modif[idul][1]);
+                                             //trimit solicitarea catre baza de date sa modifice statutul
+                                                var x1=new XMLHttpRequest();
+                                                x1.onreadystatechange=function(){
+                                                if (x1.readyState==4 && x1.status==200){
+                                                            genereaza_tabel_modificari(tip);
+                                                        }
+                                                };                                                             
+                                                x1.open("POST","Alerte.php",true);
+                                                x1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+                                                x1.send("cheie_m="+cheie_m+"&tip="+tip);
+                                             
+                                             //modific informatia in tabela
+                                        };
+                                            if (modif[i][6] == null || modif[i][6] == "") {
+                                             a.value="Nesolutionata";
+                                            }else{
+                                             a.value="Solutionata"; 
+                                            }    
+                                         document.getElementById("["+i+"]_[21]_m").appendChild(a);
+                                        
+                                      td=document.createElement("TD");td.id="["+i+"]_[22]_m";td.name="["+i+"]_[22]_m";td.style.border="1px solid black";document.getElementById("tr_m_"+i).appendChild(td);
+                                      a=document.createElement("input");a.type="submit";a.id="Editeaza_"+i;a.value="Compara cu prezentul";a.className="button is-rounded is-small has-text-black has-text-weight-bold";
+                                      a.onmouseenter=function(){document.getElementById(event.target.id).className="button is-focused is-rounded is-small has-text-link has-text-weight-bold";};
+                                      a.onmouseleave=function(){document.getElementById(event.target.id).className="button is-rounded is-small has-text-black has-text-weight-bold";};
+                                      a.onclick=function(){
+                                            document.getElementById('loadingMessage').style.display = 'block';
+                                            document.getElementById('overlay').style.display = 'block';
+                                             //indentific cheia
+                                                //extrag numarul liniei
+                                                idul=event.target.parentElement.parentElement.id;
+                                                idul=idul.substr(idul.indexOf("_")+1,event.target.parentElement.id.length);
+                                                idul=idul.substr(idul.indexOf("_")+1,event.target.parentElement.id.length);
+                                                cheie_m=parseInt(modif[idul][1]);
+                                                marca=parseInt(modif[idul][2]);
+                                             //trimit solicitarea catre baza de date sa modifice statutul
+                                                var x1=new XMLHttpRequest();
+                                                x1.onreadystatechange=function(){
+                                                if (x1.readyState==4 && x1.status==200){
+                                                            tprez=JSON.parse(atob(decodeURIComponent(x1.responseText)));
+                                                            //realizez un tabel cu informatiile din prezent si modificarile survenite
+                                                            //generez tabelul
+                                                           if (document.getElementById("lm")) {document.getElementById("lm").remove();}
+                                                            tabel=document.createElement('TABLE');
+                                                            tabel.id="lm";
+                                                            tabel.name="lm";
+                                                            tabel.classList.add("table", "is-striped", "is-bordered", "is-hoverable", "$table-row-hover-background-color");
+                                                            tabel.style.border="1px solid black";
+                                                            tabel.style.borderCollapse="collapse";
+                                                            document.getElementById("loadingMessage").appendChild(tabel);
+                                                                                                            
+                                                            tr=document.createElement("TR");
+                                                            tr.id="tr_lm_00";
+                                                            tr.name="tr_lm_00";
+                                                            tr.className = "tabel_header";
+                                                            tr.style.border="1px solid black";
+                                                            document.getElementById("lm").appendChild(tr);
+                                                                                                            
+                                                            th=document.createElement("TH");th.id="th_lm_[0]";th.name="th_lm_[0]";th.style.border="1px solid black";th.innerHTML="Nume actual";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[1]";th.name="th_lm_[1]";th.style.border="1px solid black";th.innerHTML="Cheie";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[2]";th.name="th_lm_[2]";th.style.border="1px solid black";th.innerHTML="Marca";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[3]";th.name="th_lm_[3]";th.style.border="1px solid black";th.innerHTML="NPrenume";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[4]";th.name="th_lm_[4]";th.style.border="1px solid black";th.innerHTML="Functia";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[5]";th.name="th_lm_[5]";th.style.border="1px solid black";th.innerHTML="Situatie CIM";document.getElementById("tr_lm_00").appendChild(th);
+                                                            //th=document.createElement("TH");th.id="th_m_[6]";th.name="th_m_[6]";th.style.border="1px solid black";th.innerHTML="Rezolvat";document.getElementById("tr_m_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[7]";th.name="th_lm_[7]";th.style.border="1px solid black";th.innerHTML="S1";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[8]";th.name="th_lm_[8]";th.style.border="1px solid black";th.innerHTML="S2";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[9]";th.name="th_lm_[9]";th.style.border="1px solid black";th.innerHTML="S3";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[10]";th.name="th_lm_[10]";th.style.border="1px solid black";th.innerHTML="S4";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[11]";th.name="th_lm_[11]";th.style.border="1px solid black";th.innerHTML="S5";document.getElementById("tr_lm_00").appendChild(th);
+                                                            th=document.createElement("TH");th.id="th_lm_[12]";th.name="th_lm_[12]";th.style.border="1px solid black";th.innerHTML="S6";document.getElementById("tr_lm_00").appendChild(th);
+                                                            
+                                                            tr=document.createElement("TR");tr.id="tr_m_1";tr.name="tr_m_1";tr.style.border="1px solid black";tr.className = "tabel_linie";document.getElementById("lm").appendChild(tr);
+                                                            td=document.createElement("TD");td.id="[1]_[0]_m";td.name="[1]_[0]_m";td.innerHTML=modif[idul][0];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[1]_m";td.name="[1]_[1]_m";td.innerHTML=modif[idul][1];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[2]_m";td.name="[1]_[2]_m";td.innerHTML=modif[idul][2];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[3]_m";td.name="[1]_[3]_m";td.innerHTML=modif[idul][3];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[4]_m";td.name="[1]_[4]_m";td.innerHTML=modif[idul][4];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[5]_m";td.name="[1]_[5]_m";td.innerHTML=modif[idul][5];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            //td=document.createElement("TD");td.id="["+i+"]_[6]_m";td.name="["+i+"]_[6]_m";
+                                                            td=document.createElement("TD");td.id="[1]_[7]_m";td.name="[1]_[7]_m";td.innerHTML=modif[idul][7];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[8]_m";td.name="[1]_[8]_m";td.innerHTML=modif[idul][8];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[9]_m";td.name="[1]_[9]_m";td.innerHTML=modif[idul][9];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[10]_m";td.name="[1]_[10]_m";td.innerHTML=modif[idul][10];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[11]_m";td.name="[1]_[11]_m";td.innerHTML=modif[idul][11];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[1]_[12]_m";td.name="[1]_[12]_m";td.innerHTML=modif[idul][12];td.style.border="1px solid black";document.getElementById("tr_m_1").appendChild(td);
+                                                            
+                                                            tr=document.createElement("TR");tr.id="tr_m_2";tr.name="tr_m_2";tr.style.border="1px solid black";tr.className = "tabel_linie";document.getElementById("lm").appendChild(tr);
+                                                            td=document.createElement("TD");td.id="[2]_[0]_m";td.name="[2]_[0]_m";td.innerHTML="INFORMATII EXISTENTE ACUM IN BAZA DE DATE:";td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[1]_m";td.name="[2]_[1]_m";td.innerHTML="";td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[2]_m";td.name="[2]_[2]_m";td.innerHTML=tprez[0];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[3]_m";td.name="[2]_[3]_m";td.innerHTML=tprez[1];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[4]_m";td.name="[2]_[4]_m";td.innerHTML=tprez[2];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[5]_m";td.name="[2]_[5]_m";td.innerHTML=tprez[3];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            //td=document.createElement("TD");td.id="["+i+"]_[6]_m";td.name="["+i+"]_[6]_m";
+                                                            td=document.createElement("TD");td.id="[2]_[7]_m";td.name="[2]_[7]_m";td.innerHTML=tprez[4];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[8]_m";td.name="[2]_[8]_m";td.innerHTML=tprez[5];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[9]_m";td.name="[2]_[9]_m";td.innerHTML=tprez[6];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[10]_m";td.name="[2]_[10]_m";td.innerHTML=tprez[7];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[11]_m";td.name="[2]_[11]_m";td.innerHTML=tprez[8];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            td=document.createElement("TD");td.id="[2]_[12]_m";td.name="[2]_[12]_m";td.innerHTML=tprez[9];td.style.border="1px solid black";document.getElementById("tr_m_2").appendChild(td);
+                                                            
+                                                        }
+                                                };                                                             
+                                                x1.open("POST","Alerte.php",true);
+                                                x1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+                                                x1.send("cheie_m="+cheie_m+"&marca="+marca);
+                                             
+                                             //modific informatia in tabela
+                                        };  
+                                         document.getElementById("["+i+"]_[22]_m").appendChild(a);
+                                        
+                                        
+                                  }
+                                      //introduc si numarul de fise
+                                      document.getElementById("th_alerte_[1]").innerHTML=modif.length;
+              } else{fise=[];
+                     if (document.getElementById("t_m")) {document.getElementById("t_m").remove();}
+                     document.getElementById("l_nu_exista_modif").innerHTML="Nu exista modificari de tipul: "+tip+" in baza de date.";}                      
+            }
+         };                                                             
+         xm.open("POST","Alerte.php",true);
+         xm.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+         xm.send("modificari_tip="+tip+"&marca="+marca);
+}
+
+
+
+function genereaza_tabel_fise(){
+        var xf=new XMLHttpRequest();
+        xf.onreadystatechange=function(){
+            if (xf.readyState==4 && xf.status==200){
+                if (xf.responseText!=="Nu exista") {
+                        fise=JSON.parse(atob(decodeURIComponent(xf.responseText)));
+                        //generez tabelul cu fisele de aptitudini aferente salariatului selectat
+                        if (document.getElementById("t_f")) {document.getElementById("t_f").remove();}
+                                    //generez tabelul
+                                    tabel=document.createElement('TABLE');
+                                    tabel.id="t_f";
+                                    tabel.name="t_f";
+                                    tabel.classList.add("table", "is-striped", "is-bordered", "is-hoverable", "$table-row-hover-background-color");
+                                    tabel.style.border="1px solid black";
+                                    tabel.style.borderCollapse="collapse";
+                                    tabel.onclick=function(){
+                                                             document.getElementById("div_introducere_fise").style.display='block'; //div-ul in care se regaseste tabelul prin care se introduc date in tabela cu fise
+                                    };
+                                        document.getElementById("Expirari_fise_aptitudini").appendChild(tabel);
+                                                                                        
+                
+                                        tr=document.createElement("TR");
+                                        tr.id="tr_f_00";
+                                        tr.name="tr_f_00";
+                                        tr.className = "tabel_header";
+                                        tr.style.border="1px solid black";
+                                        document.getElementById("t_f").appendChild(tr);
+                                                                                        
+                                        //th=document.createElement("TH");th.id="th_f_[0]";th.name="th_f_[0]";th.style.border="1px solid black";th.innerHTML="Cheie";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[1]";th.name="th_f_[1]";th.style.border="1px solid black";th.innerHTML="Ca";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[2]";th.name="th_f_[2]";th.style.border="1px solid black";th.innerHTML="An";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[3]";th.name="th_f_[3]";th.style.border="1px solid black";th.innerHTML="Cm";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[4]";th.name="th_f_[4]";th.style.border="1px solid black";th.innerHTML="Ad";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[5]";th.name="th_f_[5]";th.style.border="1px solid black";th.innerHTML="Rm";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[6]";th.name="th_f_[6]";th.style.border="1px solid black";th.innerHTML="Su";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[7]";th.name="th_f_[7]";th.style.border="1px solid black";th.innerHTML="Al";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[8]";th.name="th_f_[8]";th.style.border="1px solid black";th.innerHTML="Nr fisa";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[9]";th.name="th_f_[9]";th.style.border="1px solid black";th.innerHTML="An fisa";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[10]";th.name="th_f_[10]";th.style.border="1px solid black";th.innerHTML="Marca";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[11]";th.name="th_f_[11]";th.style.border="1px solid black";th.innerHTML="Nume";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[12]";th.name="th_f_[12]";th.style.border="1px solid black";th.innerHTML="Prenume";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[13]";th.name="th_f_[13]";th.style.border="1px solid black";th.innerHTML="CNP";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[14]";th.name="th_f_[14]";th.style.border="1px solid black";th.innerHTML="Functia";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[15]";th.name="th_f_[15]";th.style.border="1px solid black";th.innerHTML="Loc munca";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[16]";th.name="th_f_[16]";th.style.border="1px solid black";th.innerHTML="Aviz";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[17]";th.name="th_f_[17]";th.style.border="1px solid black";th.innerHTML="RI";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[18]";th.name="th_f_[18]";th.style.border="1px solid black";th.innerHTML="RN";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[19]";th.name="th_f_[19]";th.style.border="1px solid black";th.innerHTML="RA";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[20]";th.name="th_f_[20]";th.style.border="1px solid black";th.innerHTML="Recomandari";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[21]";th.name="th_f_[21]";th.style.border="1px solid black";th.innerHTML="Data fisa";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[22]";th.name="th_f_[22]";th.style.border="1px solid black";th.innerHTML="Medic";document.getElementById("tr_f_00").appendChild(th);
+                                        th=document.createElement("TH");th.id="th_f_[23]";th.name="th_f_[23]";th.style.border="1px solid black";th.innerHTML="Next EX";document.getElementById("tr_f_00").appendChild(th);
+                                        //th=document.createElement("TH");th.id="th_f_[24]";th.name="th_f_[24]";th.style.border="1px solid black";th.innerHTML="Editeaza";document.getElementById("tr_f_00").appendChild(th);  
+                                      for (i=0;i<fise.length;i++) { ///////////// daca se reampart nr de venituri per coloana atunci se modifica si aici
+                                          tr=document.createElement("TR");tr.id="tr_f_"+i;tr.name="tr_f_"+i;tr.style.border="1px solid black";
+                                          tr.className = "tabel_linie";document.getElementById("t_f").appendChild(tr);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[0]_f";td.name="["+i+"]_[0]_f";td.innerHTML=fise[i][0];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[1]_f";td.name="["+i+"]_[1]_f";td.innerHTML=fise[i][1];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[2]_f";td.name="["+i+"]_[2]_f";td.innerHTML=fise[i][2];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[3]_f";td.name="["+i+"]_[3]_f";td.innerHTML=fise[i][3];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[4]_f";td.name="["+i+"]_[4]_f";td.innerHTML=fise[i][4];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[5]_f";td.name="["+i+"]_[5]_f";td.innerHTML=fise[i][5];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[6]_f";td.name="["+i+"]_[6]_f";td.innerHTML=fise[i][6];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[7]_f";td.name="["+i+"]_[7]_f";td.innerHTML=fise[i][7];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[8]_f";td.name="["+i+"]_[8]_f";td.innerHTML=fise[i][8];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[9]_f";td.name="["+i+"]_[9]_f";td.innerHTML=fise[i][9];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[10]_f";td.name="["+i+"]_[10]_f";td.innerHTML=fise[i][10];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[11]_f";td.name="["+i+"]_[11]_f";td.innerHTML=fise[i][11];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[12]_f";td.name="["+i+"]_[12]_f";td.innerHTML=fise[i][12];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[13]_f";td.name="["+i+"]_[13]_f";td.innerHTML=fise[i][13];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[14]_f";td.name="["+i+"]_[14]_f";td.innerHTML=fise[i][14];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[15]_f";td.name="["+i+"]_[15]_f";td.innerHTML=fise[i][15];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[16]_f";td.name="["+i+"]_[16]_f";td.innerHTML=fise[i][16];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[17]_f";td.name="["+i+"]_[17]_f";td.innerHTML=fise[i][17];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[18]_f";td.name="["+i+"]_[18]_f";td.innerHTML=fise[i][18];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[19]_f";td.name="["+i+"]_[19]_f";td.innerHTML=fise[i][19];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[20]_f";td.name="["+i+"]_[20]_f";td.innerHTML=fise[i][20];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[21]_f";td.name="["+i+"]_[21]_f";td.innerHTML=fise[i][21];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[22]_f";td.name="["+i+"]_[22]_f";td.innerHTML=fise[i][22];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          td=document.createElement("TD");td.id="["+i+"]_[23]_f";td.name="["+i+"]_[23]_f";td.innerHTML=fise[i][23];td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                          //td=document.createElement("TD");td.id="["+i+"]_[24]_f";td.name="["+i+"]_[24]_f";td.innerHTML="Editeaza";td.style.border="1px solid black";document.getElementById("tr_f_"+i).appendChild(td);
+                                      
+                                      }
+                                      //introduc si numarul de fise
+                                      document.getElementById("th_cbu_[6]").innerHTML="Fise de aptitudine: "+fise.length;
+              } else{fise=[];document.getElementById("fise_aptitudini").innerHTML="Nu exista fise de aptitudini mentionate in baza de date pentru aceasta persoana.";}                      
+            }
+         };                                                             
+         xf.open("POST","Alerte.php",true);
+         xf.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
+         xf.send("alerte_fise=orice");
+}
+
+
+
+
+
+            
+	function Intra2(inf,decateori,lungimea){
+            document.getElementById(inf).className="navbar-item is-large has-text-primary-25 has-text-weight-bold";
+            document.getElementById(inf).
+            ok=0;
+            centru=(document.getElementById(inf).getBoundingClientRect().left+document.getElementById(inf).getBoundingClientRect().right)/2;
+            sus=document.getElementById(inf).getBoundingClientRect().top;
+            //realizeaza_linia2(ok,centru,decateori,lungimea);
+
+    }
+	
+//	function realizeaza_linia2(ok,centru,decateori,lungimea) {
+//                    if (document.getElementById("divcolor")) {document.getElementById("divcolor").remove();}
+//                    ok=ok+1;
+//					div=document.createElement("div");
+//					div.id="divcolor";
+//					div.style.position="fixed";
+//					div.style.width=ok*lungimea+"px";
+//					div.style.height="5px";
+//					div.style.backgroundColor="green";
+//					div.style.top=sus+43+"px";
+//					div.style.left=centru-ok*lungimea/2+"px";
+//                    div.style.zIndex="1020";
+//					document.body.appendChild(div);
+//                                if (ok<decateori) {
+//                                         setTimeout(function(){realizeaza_linia2(ok,centru,decateori,lungimea);},3);
+//                                }
+//    }
+
+        
+    function Out2(inf){
+           document.getElementById(inf).className="navbar-item has-text-weight-bold";
+                if (document.getElementById("divcolor")) {document.getElementById("divcolor").remove();}
+    }  
+    
+</script>
+</body>
+</html>
