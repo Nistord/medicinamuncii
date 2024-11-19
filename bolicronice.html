@@ -57,7 +57,7 @@ function informatii_de_intors (nrlinie,cheie_salariat,nume_salariat){
              //generez un tabelul cu toti salariatii selectati
        }
     };                                                             
-    x.open("POST","Boli cronice.php",true);
+    x.open("POST","Boli_cronice.php",true);
     x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
     x.send("cheie_salariat="+cheie_salariat+"&pagina="+document.title);   
         
@@ -155,7 +155,7 @@ function informatii_de_intors (nrlinie,cheie_salariat,nume_salariat){
 
        }
     };                                                             
-    x.open("POST","Boli cronice.php",true);
+    x.open("POST","Boli_cronice.php",true);
     x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");                                                                 
     x.send("ptsql="+ptsql+"&pagina="+document.title);   
 }
