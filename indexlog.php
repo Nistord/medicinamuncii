@@ -39,7 +39,7 @@ require('config.php');
 				$marca=substr($marca,0,strpos($marca,',"'));
 				                       $a=[];
 															 
-														    $con=new mysqli($host,$utilizator,$parola,$BDCabinet);
+														    $con=new mysqli(MYSQL_HOST,MYSQL_USER,MYSQL_PASS,MYSQL_DB, MYSQL_PORT);
 																$con->query('SET character_set_client="utf8",character_set_connection="utf8",character_set_results="utf8";');
 																$sql="SELECT Marca, NPren, Func, S1 FROM salariati WHERE Marca='".$marca."'";   //Dir, Str, Substr 
 															 if ($tab=mysqli_query($con,$sql)){

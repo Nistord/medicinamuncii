@@ -1,6 +1,6 @@
 <?php
 require('config.php');
-$con=new mysqli($host,$utilizator,$parola,$BDCabinet);
+$con=new mysqli(MYSQL_HOST,MYSQL_USER,MYSQL_PASS,MYSQL_DB, MYSQL_PORT);
 $con->query('SET character_set_client="utf8",character_set_connection="utf8",character_set_results="utf8", character_set_database = "utf8", character_set_server = "utf8";');
 
 if(isset($_REQUEST['ptsql']) && isset($_REQUEST['pagina'])){
