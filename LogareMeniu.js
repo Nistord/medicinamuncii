@@ -50,7 +50,10 @@ if (coo.indexOf("parolelesuntok")>-1){
 				
     a=document.createElement("a");a.innerHTML="Certificate Medicale";a.id="certificatemedicale";a.onclick=function(){Click('certificatemedicale');};a.onmouseenter=function(){Intra('certificatemedicale',10,16);};a.onmouseout=function(){Out('certificatemedicale');};
     a.classList.add("navbar-item");a.setAttribute('href',"certificatemedicale.html");document.getElementById("div_meniu_0.1").appendChild(a);
-				
+
+	a=document.createElement("a");a.innerHTML="Fise de aptitudini";a.id="fisedeaptitudini";a.onclick=function(){Click('fisedeaptitudini');};a.onmouseenter=function(){Intra('fisedeaptitudini',10,16);};a.onmouseout=function(){Out('fisedeaptitudini');};
+	a.classList.add("navbar-item");a.setAttribute('href',"fisedeaptitudini.html");document.getElementById("div_meniu_0.1").appendChild(a);
+
     a=document.createElement("a");a.innerHTML="Urgente";a.id="urgente";a.onclick=function(){Click('salariati');};a.onmouseenter=function(){Intra('urgente',10,8);};a.onmouseout=function(){Out('urgente');};
     a.classList.add("navbar-item");a.setAttribute('href',"urgente.html");document.getElementById("div_meniu_0.1").appendChild(a);
 		
@@ -138,6 +141,7 @@ document.getElementById('salariati').className="navbar-item has-text-weight-bold
 document.getElementById('alerte').className="navbar-item has-text-weight-bold";
 document.getElementById('boli').className="navbar-item has-text-weight-bold";
 document.getElementById('certificatemedicale').className="navbar-item has-text-weight-bold";
+document.getElementById('fisedeaptitudini').className="navbar-item has-text-weight-bold";
 document.getElementById('urgente').className="navbar-item has-text-weight-bold";
 document.getElementById('update-uri').className="navbar-item has-text-weight-bold";
 document.getElementById('checklistaudit').className="navbar-item has-text-weight-bold";

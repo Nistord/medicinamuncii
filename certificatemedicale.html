@@ -166,7 +166,7 @@ function lista_salariati(ls,pttitlu) {
     // Crează un CSV din datele obiectului
      let csvContent = "data:text/csv;charset=utf-8,";
     csvContent += "Certificate medicale," + pttitlu + "\n"; // Adaugă titlul
-    csvContent += "Marca,Nume si Prenume,CNP,Varsta,Sex,Functia,CIM,Cod,Denumire Diagnostic,Aparat,Data Start,Data stop,Zile calendaristice,Varsta,Luna,An\n"; // Adaugă header-ul
+    csvContent += "Marca,Nume si Prenume,CNP,Varsta,Sex,Functia,CIM,Cod,Denumire Diagnostic,Aparat,Cid Indemnizatie, Data Start,Data stop,Zile calendaristice,Varsta,Luna,An\n"; // Adaugă header-ul
     for (i=0;i<ls.length;i++) {
        for (j=1;j<=22;j++) {
             if (j<22) {
@@ -201,6 +201,7 @@ function lista_salariati(ls,pttitlu) {
                                      tabel.classList.add("table", "is-striped", "is-bordered", "is-hoverable", "$table-row-hover-background-color");
                                      tabel.style.border="1px solid black";
                                      tabel.style.borderCollapse="collapse";
+                                     tabel.style.width="600px";
                                      document.getElementById("div_tabel").appendChild(tabel);
 
                                          tr=document.createElement("TR");
@@ -229,12 +230,13 @@ function lista_salariati(ls,pttitlu) {
                                          th=document.createElement("TH");th.id="th_sal_[14]";th.name="th_sal_[14]";th.style.border="1px solid black";th.innerHTML="Cod";document.getElementById("tr_sal_00").appendChild(th);
                                          th=document.createElement("TH");th.id="th_sal_[15]";th.name="th_sal_[15]";th.style.border="1px solid black";th.innerHTML="Denumire Diag.";document.getElementById("tr_sal_00").appendChild(th);
                                          th=document.createElement("TH");th.id="th_sal_[16]";th.name="th_sal_[16]";th.style.border="1px solid black";th.innerHTML="Aparat";document.getElementById("tr_sal_00").appendChild(th);
-                                         th=document.createElement("TH");th.id="th_sal_[17]";th.name="th_sal_[17]";th.style.border="1px solid black";th.innerHTML="Data Start";document.getElementById("tr_sal_00").appendChild(th);
-                                         th=document.createElement("TH");th.id="th_sal_[18]";th.name="th_sal_[18]";th.style.border="1px solid black";th.innerHTML="Data Stop";document.getElementById("tr_sal_00").appendChild(th);
-                                         th=document.createElement("TH");th.id="th_sal_[19]";th.name="th_sal_[19]";th.style.border="1px solid black";th.innerHTML="Zile calendaristice";document.getElementById("tr_sal_00").appendChild(th);
-                                         th=document.createElement("TH");th.id="th_sal_[20]";th.name="th_sal_[20]";th.style.border="1px solid black";th.innerHTML="Varsta";document.getElementById("tr_sal_00").appendChild(th);
-                                         th=document.createElement("TH");th.id="th_sal_[21]";th.name="th_sal_[21]";th.style.border="1px solid black";th.innerHTML="Luna";document.getElementById("tr_sal_00").appendChild(th);
-                                         th=document.createElement("TH");th.id="th_sal_[22]";th.name="th_sal_[22]";th.style.border="1px solid black";th.innerHTML="An";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[17]";th.name="th_sal_[17]";th.style.border="1px solid black";th.innerHTML="Cod Indemnizatie";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[18]";th.name="th_sal_[18]";th.style.border="1px solid black";th.innerHTML="Data Start";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[19]";th.name="th_sal_[19]";th.style.border="1px solid black";th.innerHTML="Data Stop";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[20]";th.name="th_sal_[20]";th.style.border="1px solid black";th.innerHTML="Zile calendaristice";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[21]";th.name="th_sal_[21]";th.style.border="1px solid black";th.innerHTML="Varsta";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[22]";th.name="th_sal_[22]";th.style.border="1px solid black";th.innerHTML="Luna";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[23]";th.name="th_sal_[23]";th.style.border="1px solid black";th.innerHTML="An";document.getElementById("tr_sal_00").appendChild(th);
                                          
                                          
                                          
@@ -255,17 +257,24 @@ function lista_salariati(ls,pttitlu) {
                                            td=document.createElement("TD");td.id="["+i+"]_[5]_sal";td.name="["+i+"]_[5]_sal";td.innerHTML=sex;td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[6]_sal";td.name="["+i+"]_[6]_sal";td.innerHTML=ls[i][6];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[7]_sal";td.name="["+i+"]_[7]_sal";td.innerHTML=ls[i][7];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
-                                          // td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
-                                          // td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[10]_sal";td.name="["+i+"]_[10]_sal";td.innerHTML=ls[i][10];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[11]_sal";td.name="["+i+"]_[11]_sal";td.innerHTML=ls[i][11];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[12]_sal";td.name="["+i+"]_[12]_sal";td.innerHTML=ls[i][12];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[13]_sal";td.name="["+i+"]_[13]_sal";td.innerHTML=ls[i][13];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                          // td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                          // td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[14]_sal";td.name="["+i+"]_[14]_sal";td.innerHTML=ls[i][14];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[15]_sal";td.name="["+i+"]_[15]_sal";td.innerHTML=ls[i][15];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                            td=document.createElement("TD");td.id="["+i+"]_[16]_sal";td.name="["+i+"]_[16]_sal";td.innerHTML=ls[i][16];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[17]_sal";td.name="["+i+"]_[17]_sal";td.innerHTML=ls[i][17];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[18]_sal";td.name="["+i+"]_[18]_sal";td.innerHTML=ls[i][18];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[19]_sal";td.name="["+i+"]_[19]_sal";td.innerHTML=ls[i][19];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[20]_sal";td.name="["+i+"]_[20]_sal";td.innerHTML=ls[i][20];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[21]_sal";td.name="["+i+"]_[21]_sal";td.innerHTML=ls[i][21];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[22]_sal";td.name="["+i+"]_[22]_sal";td.innerHTML=ls[i][22];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[22]_sal";td.name="["+i+"]_[23]_sal";td.innerHTML=ls[i][23];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
                                        }                            
 }
 </script>

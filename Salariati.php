@@ -185,7 +185,9 @@ if(isset($_REQUEST["salveaza_tsu"])){
   }
 }
 
+if (isset($_REQUEST["marca_salariat_pt_poza"])){
 
+}
 
 
 
@@ -299,4 +301,31 @@ if(isset($_REQUEST["stergef"]) && isset($_REQUEST["cheie_f"])){
       } 
 }
 
+
+if(isset($_REQUEST['marca_salariat_pt_poza'])){
+    $tokenul="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhM2NiMzUwLTZiODEtMTFlZi1hYjYxLTQ3MGY2Mzg5NTIzYSIsImNsaWVudCI6eyJ1dWlkIjoiMzU0YTVhOTQtZDJjYS0xMWVkLWFmYTEtMDI0MmFjMTIwMDAyIiwibmFtZSI6IkRpc3BlbnNhciJ9LCJwZXJtcyI6ImNoYXJpc21hLnNpY2tfbGVhdmVzLGFuZ2FqYXQubGlzdF90ZW1wbGF0ZSxhdmF0YXIubGlzdCIsImlhdCI6MTcyNTUzOTE0NiwiZXhwIjo0ODQ3NjAzMTQ2LCJtZXRhIjp7fX0.78s-YPc_AcWiYzxL2QSOyuogffFKx2SXDMUupExyFQo";
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://employee-avatar.antibiotice.ro/avatars/'.$_REQUEST['marca_salariat_pt_poza'].'?format=data',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$tokenul
+        ),
+    ));
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    echo $response;
+
+    //$imagine = json_decode($response, true);
+    //echo $imagine;
+}
+$con->close();
 ?>

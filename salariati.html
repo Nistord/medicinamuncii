@@ -48,6 +48,7 @@ ls=[];//lista salariati
 salariat_in_ls="";//pozitia salariatului pe care s-a dat click in lista de salariati (din tabela de salariati)
 numelog="";//memorez numele persoanei logate
 ok="";
+ultimele2structuri="";
 //identific din cooki-uri numele persoanei care s-a logat
 numelog=document.cookie;
 numelog=numelog.substr(numelog.indexOf("Nume")+5,numelog.length);
@@ -67,6 +68,8 @@ function informatii_de_intors (nrlinie,cheie_salariat,nume_salariat){
                  ultimele2structuri=tabela_salariati[nrlinie][j];
              }else{pttitlu=pttitlu+", "+tabela_salariati[nrlinie][j];
                    //ultimele doua structuri de care apartine
+                 //alert(tabela_salariati[nrlinie][j-1]);
+                 //alert(tabela_salariati[nrlinie][j]);
                    ultimele2structuri=tabela_salariati[nrlinie][j-1]+", "+tabela_salariati[nrlinie][j];
                                                                       }
            }
@@ -126,6 +129,7 @@ function lista_salariati(ls,pttitlu) {
                                      tabel.classList.add("table", "is-striped", "is-bordered", "is-hoverable", "$table-row-hover-background-color");
                                      tabel.style.border="1px solid black";
                                      tabel.style.borderCollapse="collapse";
+                                     tabel.style.width="600px";
                                      document.getElementById("div_tabel").appendChild(tabel);
 
                                          tr=document.createElement("TR");
@@ -145,6 +149,13 @@ function lista_salariati(ls,pttitlu) {
                                          th=document.createElement("TH");th.id="th_sal_[7]";th.name="th_sal_[7]";th.style.border="1px solid black";th.innerHTML="CIM";document.getElementById("tr_sal_00").appendChild(th);
                                          //th=document.createElement("TH");th.id="th_sal_[8]";th.name="th_sal_[8]";th.style.border="1px solid black";th.innerHTML="Serviciu:";document.getElementById("tr_sal_00").appendChild(th);
                                          //th=document.createElement("TH");th.id="th_sal_[9]";th.name="th_sal_[9]";th.style.border="1px solid black";th.innerHTML="Personal:";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[8]";th.name="th_sal_[8]";th.style.border="1px solid black";th.innerHTML="Directia";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[9]";th.name="th_sal_[9]";th.style.border="1px solid black";th.innerHTML="Structura 2";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[10]";th.name="th_sal_[10]";th.style.border="1px solid black";th.innerHTML="Structura 3";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[11]";th.name="th_sal_[11]";th.style.border="1px solid black";th.innerHTML="Structura 4";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[12]";th.name="th_sal_[12]";th.style.border="1px solid black";th.innerHTML="Structura 5";document.getElementById("tr_sal_00").appendChild(th);
+                                         th=document.createElement("TH");th.id="th_sal_[13]";th.name="th_sal_[13]";th.style.border="1px solid black";th.innerHTML="Structura 6";document.getElementById("tr_sal_00").appendChild(th);
+
                                          datacurenta = new Date();
                                          numaruldezile=(datacurenta.getFullYear()-1)*365+datacurenta.getMonth()*30+datacurenta.getDate();
                                        for (i=0;i<ls.length;i++) { ///////////// daca se reampart nr de venituri per coloana atunci se modifica si aici
@@ -178,8 +189,18 @@ function lista_salariati(ls,pttitlu) {
                                                         td=document.createElement("TD");td.id="ft/1/1";document.getElementById("tr_ft_1").appendChild(td);
                                                         td=document.createElement("TD");td.id="ft/1/2";td.style.verticalAlign="center";document.getElementById("tr_ft_1").appendChild(td);
                                                         div=document.createElement("div");div.id="fotografie";div.style.padding="10px";document.getElementById("ft/1/1").appendChild(div);//"https://employee-avatar.antibiotice.ro/avatars/"+ls[event.target.parentElement.name][1]+"?width=100'"
-                                                        a=document.createElement("img");a.src="https://employee-avatar.antibiotice.ro/avatars/"+ls[event.target.parentElement.name][1]+"?width=100'";a.style.height="125px";a.id="salariati";document.getElementById("fotografie").appendChild(a);
-                                                        div=document.createElement("div");div.id="spatiu0";div.style.height="50px";document.getElementById("ft/1/2").appendChild(div);
+                                                       // a=document.createElement("img");a.style.height="125px";a.id="salariati";document.getElementById("fotografie").appendChild(a); //a.src="https://employee-avatar.antibiotice.ro/avatars/"+ls[event.target.parentElement.name][1]+"?width=100'";
+                                                              //solicit primirea informatiei privinf imaginea
+                                                               var x=new XMLHttpRequest();
+                                                               x.onreadystatechange=function(){
+                                                                   if (x.readyState==4 && x.status==200){
+                                                                       a=document.createElement("img");a.style.height="125px";a.src=x.responseText;a.id="salariati";document.getElementById("fotografie").appendChild(a);
+                                                                   }
+                                                               };
+                                                               x.open("POST","Salariati.php",true);
+                                                               x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                                               x.send("marca_salariat_pt_poza="+ls[event.target.parentElement.name][1]);
+                                               div=document.createElement("div");div.id="spatiu0";div.style.height="50px";document.getElementById("ft/1/2").appendChild(div);
                                                         
                                                         div=document.createElement("div");div.id="Marca_l";div.innerHTML="Marca: "+ls[event.target.parentElement.name][1];document.getElementById("ft/1/2").appendChild(div);
                                                         div=document.createElement("div");div.id="Nume_l";div.innerHTML="Nume: "+ls[event.target.parentElement.name][2];document.getElementById("ft/1/2").appendChild(div);
@@ -457,7 +478,7 @@ function lista_salariati(ls,pttitlu) {
                                                                                               th=document.createElement("TH");th.id="th_cb_[3]";th.name="th_cb_[3]";th.style.border="1px solid black";th.innerHTML="Cod";document.getElementById("tr_cb_00").appendChild(th);
                                                                                               th=document.createElement("TH");th.id="th_cb_[4]";th.name="th_cb_[4]";th.style.border="1px solid black";th.innerHTML="Afectiune";document.getElementById("tr_cb_00").appendChild(th);
                                                                                               th=document.createElement("TH");th.id="th_cb_[5]";th.name="th_cb_[5]";th.style.border="1px solid black";th.innerHTML="Aparat";document.getElementById("tr_cb_00").appendChild(th);
-                                                                                              th=document.createElement("TH");th.id="th_cb_[6]";th.name="th_cb_[6]";th.style.border="1px solid black";th.innerHTML="Tip concediu";document.getElementById("tr_cb_00").appendChild(th);
+                                                                                              th=document.createElement("TH");th.id="th_cb_[6]";th.name="th_cb_[6]";th.style.border="1px solid black";th.innerHTML="Cod Indemnizatie";document.getElementById("tr_cb_00").appendChild(th);
                                                                                               th=document.createElement("TH");th.id="th_cb_[7]";th.name="th_cb_[7]";th.style.border="1px solid black";th.innerHTML="Incepand cu";document.getElementById("tr_cb_00").appendChild(th);
                                                                                               th=document.createElement("TH");th.id="th_cb_[8]";th.name="th_cb_[8]";th.style.border="1px solid black";th.innerHTML="Pana la data";document.getElementById("tr_cb_00").appendChild(th);
                                                                                               th=document.createElement("TH");th.id="th_cb_[9]";th.name="th_cb_[9]";th.style.border="1px solid black";th.innerHTML="Zile";document.getElementById("tr_cb_00").appendChild(th);
@@ -800,6 +821,12 @@ function lista_salariati(ls,pttitlu) {
                                            td=document.createElement("TD");td.id="["+i+"]_[7]_sal";td.name="["+i+"]_[7]_sal";td.innerHTML=ls[i][7];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
                                           // td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
                                           // td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[11]_sal";td.name="["+i+"]_[11]_sal";td.innerHTML=ls[i][11];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[12]_sal";td.name="["+i+"]_[12]_sal";td.innerHTML=ls[i][12];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[13]_sal";td.name="["+i+"]_[13]_sal";td.innerHTML=ls[i][13];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[14]_sal";td.name="["+i+"]_[14]_sal";td.innerHTML=ls[i][14];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[15]_sal";td.name="["+i+"]_[15]_sal";td.innerHTML=ls[i][15];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
+                                           td=document.createElement("TD");td.id="["+i+"]_[16]_sal";td.name="["+i+"]_[16]_sal";td.innerHTML=ls[i][16];td.style.border="1px solid black";document.getElementById(ls[i][1]).appendChild(td);
                                        }                            
 }
 

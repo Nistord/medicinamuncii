@@ -1,0 +1,269 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<style>
+  html {
+    background-image: url('logo/albfundal.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+</style>
+
+<head>
+  <title>fisedeaptitudini</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+  <link rel="stylesheet" href="LogoIndex.css">
+  <link rel="stylesheet" type="text/css" href="desenarearbore.css">
+  <link rel="stylesheet" type="text/css" href="selectii.css">
+  <link rel="stylesheet" type="text/css" href="Salariati.css">
+</head>
+<body>
+<script src="LogareMeniu.js"></script>
+<script src="desenarearbore.js"></script>
+<script src="selectiiptfiseaptitudini.js"></script>
+
+<script type="application/x-javascript" charset="UTF-8">
+
+
+  function informatii_de_intors (nrlinie,cheie_salariat,nume_salariat){
+    ls=[];//mai intai initialiezez cu multimea vida intregul array
+    //ls[0]=[];
+    pttitlu="";
+    for (j=0;j<tabela_salariati[nrlinie].length;j++) { //am pus -2 deoarece au aparut 2 campuri noi la final in baza de date unul cu nume si unul cu prenume
+      //ls[0][j]=tabela_salariati[nrlinie][j]; //-nu mai este nevoie deoarece continutul informatiilor din lista este diferit
+      if (j>10 && j<23 &&tabela_salariati[nrlinie][j]!==null && tabela_salariati[nrlinie][j]!=="") {
+        if (pttitlu=="") {
+          pttitlu=tabela_salariati[nrlinie][j];
+          ultimele2structuri=tabela_salariati[nrlinie][j];
+        }else{pttitlu=pttitlu+", "+tabela_salariati[nrlinie][j];
+          //ultimele doua structuri de care apartine
+          ultimele2structuri=tabela_salariati[nrlinie][j-1]+", "+tabela_salariati[nrlinie][j];
+        }
+      }
+    }
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+      if (x.readyState==4 && x.status==200){
+        if (x.responseText!=="Nu exista") {
+          ls=JSON.parse(atob(decodeURIComponent(x.responseText)));
+          lista_salariati(ls,pttitlu);
+        }else{
+          if (document.getElementById("br1")) {document.getElementById("br1").remove();}
+          if (document.getElementById("Titlu_tabel")) {document.getElementById("Titlu_tabel").remove();}
+          if (document.getElementById("br2")) {document.getElementById("br2").remove();}
+          if (document.getElementById("sal")) {document.getElementById("sal").remove();}
+        }
+        //generez un tabelul cu toti salariatii selectati
+      }
+    };
+    x.open("POST","fisedeaptitudini.php",true);
+    x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    x.send("cheie_salariat="+cheie_salariat+"&pagina="+document.title);
+
+
+  }
+
+
+  function genereaza_tabel(id_ul) {  //aceasta functie este apelata din pagina     desenarearbore.js  ASADAR, NU SE VA STERGE
+    //duc pentru inceput, div-ul in care urmeaza sa fie realizat tabelul, cu 200 de px mai sus datorita introducerii grilelor suplimentare de selectie in pagina
+
+
+    //voi trimite catre server informatii privind pagina in care se afla persoana precum si id-ul trimis transformat intr-o cerinta sql
+    z=id_ul;
+
+    //elimin partea de inceput a lui z (l_)
+    z=z.substr(z.indexOf("_")+1,z.length);
+    i=0;
+    //realizez partea string
+    while (z.indexOf("_")>-1){
+      str=z.substr(0,z.indexOf("_"));
+      z=z.substr(z.indexOf("_")+1,z.length);
+      i=i+1;
+      if (i==1) {
+        ptsql="salariati.S"+i+"='"+str+"'";
+        pttitlu=str;
+      }else{ptsql=ptsql+" AND S"+i+"='"+str+"'"; }
+    }
+    i=i+1;
+    if (i==1) {
+      ptsql="salariati.S"+i+"='"+z+"'";
+      pttitlu=z;
+    }else{ptsql=ptsql+" AND salariati.S"+i+"='"+z+"'"; pttitlu=pttitlu+", "+z;}
+    //verific daca exista informatii si daca exista le adaug in variabila ptsql
+    if (document.getElementById("sex").options[document.getElementById("sex").selectedIndex].value!=="") {
+      if (document.getElementById("sex").options[document.getElementById("sex").selectedIndex].value=='M') {
+        ptsql=ptsql+" AND salariati.Sex='1'";
+      }
+      if (document.getElementById("sex").options[document.getElementById("sex").selectedIndex].value=='F') {
+        ptsql=ptsql+" AND salariati.Sex='2'";
+      }
+    }
+
+    if (document.getElementById("CIM").options[document.getElementById("CIM").selectedIndex].value!=="") {
+      ptsql=ptsql+" AND salariati.SitCIM='"+document.getElementById("CIM").options[document.getElementById("CIM").selectedIndex].value+"'";
+    }
+    if (document.getElementById("Perioada_incepand_cu").value!=="") {
+      ptsql=ptsql+" AND fise.Data_fisa>='"+document.getElementById("Perioada_incepand_cu").value+"'";
+    }
+    if (document.getElementById("Perioada_pana_la").value!=="") {
+      ptsql=ptsql+" AND fise.Data_urm_examen<='"+document.getElementById("Perioada_pana_la").value+"'";
+    }
+
+
+    if (document.getElementById("AvizMedical").options[document.getElementById("AvizMedical").selectedIndex].value!=="") {
+      ptsql=ptsql+" AND fise.Tip_aviz_medical='"+document.getElementById("AvizMedical").options[document.getElementById("AvizMedical").selectedIndex].value+"'";
+    }
+
+    if (document.getElementById("LucruLaInaltime").options[document.getElementById("LucruLaInaltime").selectedIndex].value!=="") {
+      ptsql=ptsql+" AND fise.R_inaltime='"+document.getElementById("LucruLaInaltime").options[document.getElementById("LucruLaInaltime").selectedIndex].value+"'";
+    }
+
+    if (document.getElementById("TuraDeNoapte").options[document.getElementById("TuraDeNoapte").selectedIndex].value!=="") {
+      ptsql=ptsql+" AND fise.R_noapte='"+document.getElementById("TuraDeNoapte").options[document.getElementById("TuraDeNoapte").selectedIndex].value+"'";
+    }
+
+    if (document.getElementById("Auto").options[document.getElementById("Auto").selectedIndex].value!=="") {
+      ptsql=ptsql+" AND fise.R_auto='"+document.getElementById("Auto").options[document.getElementById("Auto").selectedIndex].value+"'";
+    }
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+      if (x.readyState==4 && x.status==200){
+        if (x.responseText!=="Nu exista") {
+          ls=JSON.parse(atob(decodeURIComponent(x.responseText)));
+          lista_salariati(ls,pttitlu);
+          //generez un tabelul cu toti salariatii selectati
+        }else{
+          if (document.getElementById("br1")) {document.getElementById("br1").remove();}
+          if (document.getElementById("Titlu_tabel")) {document.getElementById("Titlu_tabel").remove();}
+          if (document.getElementById("br2")) {document.getElementById("br2").remove();}
+          if (document.getElementById("sal")) {document.getElementById("sal").remove();}
+        }
+
+      }
+    };
+    x.open("POST","fisedeaptitudini.php",true);
+    x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    x.send("ptsql="+ptsql+"&pagina="+document.title);
+  }
+
+
+
+
+
+
+  // functie pt a genera CSV
+
+  function lista_salariati(ls,pttitlu) {
+
+    // Crează un CSV din datele obiectului
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Fise de aptitudini " + pttitlu + "\n"; // Adaugă titlul
+    csvContent += "Marca,Nume si Prenume,CNP,Varsta,Sex,Functia,CIM,Directia,Structura 2,Structura 3, Structura 4, Structura 5, Structura 6,Functia (din fisa),Structura (din fisa),Aviz medical,Lucru la inaltime,Tura de noapte, Auto\n"; // Adaugă header-ul
+    for (i=0;i<ls.length;i++) {
+      for (j=1;j<=19;j++) {
+        if (j<19) {
+          csvContent +=ls[i][j]+ ","; //////////// sa nu fie cred si la ultimul element   + ","
+        }else{csvContent +=ls[i][j]+ "\n";}
+      }
+    }
+    if (document.getElementById("fisierCSV")) {document.getElementById("fisierCSV").remove();}
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.id="fisierCSV";
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "Fise de aptitudini " + pttitlu + ".csv");
+    link.innerHTML="Descarca CSV";
+    document.getElementById("[5]_[3]_fil").appendChild(link);
+
+    if (document.getElementById("br1")) {document.getElementById("br1").remove();}
+    if (document.getElementById("Titlu_tabel")) {document.getElementById("Titlu_tabel").remove();}
+    if (document.getElementById("br2")) {document.getElementById("br2").remove();}
+    a=document.createElement("br");a.id="br1"; document.getElementById("div_tabel").appendChild(a);
+    a=document.createElement('label');a.id="Titlu_tabel";a.innerHTML="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+pttitlu+" - "+ls.length; document.getElementById("div_tabel").appendChild(a);
+    a=document.createElement("br");a.id="br2"; document.getElementById("div_tabel").appendChild(a);
+    //div-urile trebuie sa inceapa de la 3 deoarece exista 1 si 2 in LogareMeniu.js
+    //generez un tabel cu informatia primita
+    if (document.getElementById("sal")) {document.getElementById("sal").remove();}
+    //generez tabelul
+    tabel=document.createElement('TABLE');
+    tabel.id="sal";
+    tabel.name="sal";
+    tabel.classList.add("table", "is-striped", "is-bordered", "is-hoverable", "$table-row-hover-background-color");
+    tabel.style.border="1px solid black";
+    tabel.style.borderCollapse="collapse";
+    tabel.style.width="600px";
+    document.getElementById("div_tabel").appendChild(tabel);
+
+    tr=document.createElement("TR");
+    tr.id="tr_sal_00";
+    tr.name="tr_sal_00";
+    tr.className = "tabel_header";
+    tr.style.border="1px solid black";
+    document.getElementById("sal").appendChild(tr);
+
+    //th=document.createElement("TH");th.id="th_sal_[0]";th.name="th_sal_[0]";th.style.border="1px solid black";th.innerHTML="Cheie";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[1]";th.name="th_sal_[1]";th.style.border="1px solid black";th.innerHTML="Marca";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[2]";th.name="th_sal_[2]";th.style.border="1px solid black";th.innerHTML="Nume si Prenume";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[3]";th.name="th_sal_[3]";th.style.border="1px solid black";th.innerHTML="CNP";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[4]";th.name="th_sal_[4]";th.style.border="1px solid black";th.innerHTML="Varsta";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[5]";th.name="th_sal_[5]";th.style.border="1px solid black";th.innerHTML="Sex";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[6]";th.name="th_sal_[6]";th.style.border="1px solid black";th.innerHTML="Functia";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[7]";th.name="th_sal_[7]";th.style.border="1px solid black";th.innerHTML="CIM";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[8]";th.name="th_sal_[8]";th.style.border="1px solid black";th.innerHTML="Directia";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[9]";th.name="th_sal_[9]";th.style.border="1px solid black";th.innerHTML="Structura 2";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[10]";th.name="th_sal_[10]";th.style.border="1px solid black";th.innerHTML="Structura 3";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[11]";th.name="th_sal_[11]";th.style.border="1px solid black";th.innerHTML="Structura 4";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[12]";th.name="th_sal_[12]";th.style.border="1px solid black";th.innerHTML="Structura 5";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[13]";th.name="th_sal_[13]";th.style.border="1px solid black";th.innerHTML="Structura 6";document.getElementById("tr_sal_00").appendChild(th);
+    //th=document.createElement("TH");th.id="th_sal_[8]";th.name="th_sal_[8]";th.style.border="1px solid black";th.innerHTML="Serviciu:";document.getElementById("tr_sal_00").appendChild(th);
+    //th=document.createElement("TH");th.id="th_sal_[9]";th.name="th_sal_[9]";th.style.border="1px solid black";th.innerHTML="Personal:";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[14]";th.name="th_sal_[14]";th.style.border="1px solid black";th.innerHTML="Functia (din fisa)";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[15]";th.name="th_sal_[15]";th.style.border="1px solid black";th.innerHTML="Structura (din fisa)";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[16]";th.name="th_sal_[16]";th.style.border="1px solid black";th.innerHTML="Aviz medical";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[17]";th.name="th_sal_[17]";th.style.border="1px solid black";th.innerHTML="Lucru la inaltime";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[18]";th.name="th_sal_[18]";th.style.border="1px solid black";th.innerHTML="Tura de noapte";document.getElementById("tr_sal_00").appendChild(th);
+    th=document.createElement("TH");th.id="th_sal_[18]";th.name="th_sal_[18]";th.style.border="1px solid black";th.innerHTML="Auto";document.getElementById("tr_sal_00").appendChild(th);
+
+
+    datacurenta = new Date();
+    numaruldezile=(datacurenta.getFullYear()-1)*365+datacurenta.getMonth()*30+datacurenta.getDate();
+    for (i=0;i<ls.length;i++) { ///////////// daca se reampart nr de venituri per coloana atunci se modifica si aici
+      anul=parseInt(ls[i][4].substr(0,ls[i][4].indexOf("-")));
+      luna=parseInt(ls[i][4].substr(5,ls[i][4].indexOf("-")));
+      ziua=parseInt(ls[i][4].substr(8,ls[i][4].indexOf("-")));
+      totalzile=(anul-1)*365+(luna-1)*30+ziua;
+      if (ls[i][5]==1) {sex="M";}else{sex="F";}
+      tr=document.createElement("TR");tr.id=i;tr.name=i;border="1px solid black";tr.className = "tabel_linie";document.getElementById("sal").appendChild(tr);
+      //td=document.createElement("TD");td.id="["+i+"]_[0]_sal";td.name="["+i+"]_[0]_sal";td.innerHTML=ls[i][0];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[1]_sal";td.name="["+i+"]_[1]_sal";td.innerHTML=ls[i][1];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[2]_sal";td.name="["+i+"]_[2]_sal";td.innerHTML=ls[i][2];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[3]_sal";td.name="["+i+"]_[3]_sal";td.innerHTML=ls[i][3];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[4]_sal";td.name="["+i+"]_[4]_sal";td.innerHTML=Math.trunc((numaruldezile-totalzile)/365);td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[5]_sal";td.name="["+i+"]_[5]_sal";td.innerHTML=sex;td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[6]_sal";td.name="["+i+"]_[6]_sal";td.innerHTML=ls[i][6];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[7]_sal";td.name="["+i+"]_[7]_sal";td.innerHTML=ls[i][7];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[10]_sal";td.name="["+i+"]_[10]_sal";td.innerHTML=ls[i][10];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[11]_sal";td.name="["+i+"]_[11]_sal";td.innerHTML=ls[i][11];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[12]_sal";td.name="["+i+"]_[12]_sal";td.innerHTML=ls[i][12];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[13]_sal";td.name="["+i+"]_[13]_sal";td.innerHTML=ls[i][13];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+
+      // td=document.createElement("TD");td.id="["+i+"]_[8]_sal";td.name="["+i+"]_[8]_sal";td.innerHTML=ls[i][8];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      // td=document.createElement("TD");td.id="["+i+"]_[9]_sal";td.name="["+i+"]_[9]_sal";td.innerHTML=ls[i][9];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[14]_sal";td.name="["+i+"]_[14]_sal";td.innerHTML=ls[i][14];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[15]_sal";td.name="["+i+"]_[15]_sal";td.innerHTML=ls[i][15];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      if (ls[i][16]==1) {td=document.createElement("TD");td.id="["+i+"]_[16]_sal";td.name="["+i+"]_[16]_sal";td.innerHTML="APT";td.style.border="1px solid black";document.getElementById(i).appendChild(td);}
+      if (ls[i][16]==2) {td=document.createElement("TD");td.id="["+i+"]_[16]_sal";td.name="["+i+"]_[16]_sal";td.innerHTML="APT CONDITIONAT";td.style.border="1px solid black";document.getElementById(i).appendChild(td);}
+      if (ls[i][16]==3) {td=document.createElement("TD");td.id="["+i+"]_[16]_sal";td.name="["+i+"]_[16]_sal";td.innerHTML="INAPT TEMPORAR";td.style.border="1px solid black";document.getElementById(i).appendChild(td);}
+      if (ls[i][16]==4) {td=document.createElement("TD");td.id="["+i+"]_[16]_sal";td.name="["+i+"]_[16]_sal";td.innerHTML="INAPT";td.style.border="1px solid black";document.getElementById(i).appendChild(td);}
+      td=document.createElement("TD");td.id="["+i+"]_[17]_sal";td.name="["+i+"]_[17]_sal";td.innerHTML=ls[i][17];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[18]_sal";td.name="["+i+"]_[18]_sal";td.innerHTML=ls[i][18];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+      td=document.createElement("TD");td.id="["+i+"]_[19]_sal";td.name="["+i+"]_[19]_sal";td.innerHTML=ls[i][19];td.style.border="1px solid black";document.getElementById(i).appendChild(td);
+    }
+  }
+</script>
+
+</body>
+</html>

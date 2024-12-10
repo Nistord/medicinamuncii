@@ -1,11 +1,8 @@
 <?php
-
+require('config.php');
+$con=new mysqli(MYSQL_HOST,MYSQL_USER,MYSQL_PASS,MYSQL_DB, MYSQL_PORT);
+$con->query('SET character_set_client="utf8",character_set_connection="utf8",character_set_results="utf8", character_set_database = "utf8", character_set_server = "utf8";');
 if(isset($_REQUEST['luna']) && isset($_REQUEST['anul'])){
-   require('config.php');
-   $con=new mysqli($host,$utilizator,$parola,$BDCabinet);
-   $con->query('SET character_set_client="utf8",character_set_connection="utf8",character_set_results="utf8", character_set_database = "utf8", character_set_server = "utf8";');
-   
-     
      $boli = array();
      
      $tokenul="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhM2NiMzUwLTZiODEtMTFlZi1hYjYxLTQ3MGY2Mzg5NTIzYSIsImNsaWVudCI6eyJ1dWlkIjoiMzU0YTVhOTQtZDJjYS0xMWVkLWFmYTEtMDI0MmFjMTIwMDAyIiwibmFtZSI6IkRpc3BlbnNhciJ9LCJwZXJtcyI6ImNoYXJpc21hLnNpY2tfbGVhdmVzLGFuZ2FqYXQubGlzdF90ZW1wbGF0ZSxhdmF0YXIubGlzdCIsImlhdCI6MTcyNTUzOTE0NiwiZXhwIjo0ODQ3NjAzMTQ2LCJtZXRhIjp7fX0.78s-YPc_AcWiYzxL2QSOyuogffFKx2SXDMUupExyFQo";
@@ -45,15 +42,15 @@ if(isset($_REQUEST['luna']) && isset($_REQUEST['anul'])){
          $a=mysqli_fetch_row($tab);         
          $cod=$a[0];
       }
-     //$nume_complet=trim($concediip["_NUME"])." ".trim($concediip["_PRENUME"]);
+     $nume_complet=trim($concediip["_NUME"])." ".trim($concediip["_PRENUME"]);
      $sql="INSERT INTO concedii (Marca) VALUES ('".(int)$concediip["_MARCA"]."')"; mysqli_query($con,$sql); if (mysqli_error($con)){echo mysqli_error($con);}
      $sql="SELECT Cheie FROM concedii ORDER BY Cheie DESC LIMIT 1";
       $tab=mysqli_query($con,$sql);
        if(mysqli_num_rows($tab)>0){
          $a=mysqli_fetch_row($tab);         
          $ch=$a[0];
-      }
-     $sql="UPDATE concedii SET NPren='".$nume_complet."', CodDiagnostic='".$concediip["_COD_DIAGNOSTIC"]."', Afectiune='".$concediip["_AFECTIUNE"]."', Aparat='".$cod."', TipConcediu='Boala', DStart='".$concediip["data_start"]."', DStop='".$concediip["data_stop"]."', Zile='".$concediip["_zi_calend"]."', Varsta='".$concediip["_Varsta"]."' , Luna='".$concediip["_Luna"]."' , An='".$concediip["_Anul"]."' WHERE Cheie='".$ch."'"; mysqli_query($con,$sql); if (mysqli_error($con)){echo mysqli_error($con);}
+      }//
+     $sql="UPDATE concedii SET NPren='".$nume_complet."', CodDiagnostic='".$concediip["_COD_DIAGNOSTIC"]."', Afectiune='".$concediip["_AFECTIUNE"]."', Aparat='".$cod."', CodIndemnizatie='".$concediip["cod_indemnizatie"]."', DStart='".$concediip["data_start"]."', DStop='".$concediip["data_stop"]."', Zile='".$concediip["_zi_calend"]."', Varsta='".$concediip["_Varsta"]."' , Luna='".$concediip["_Luna"]."' , An='".$concediip["_Anul"]."' WHERE Cheie='".$ch."'"; mysqli_query($con,$sql); if (mysqli_error($con)){echo mysqli_error($con);}
    }
    
     $con->close(); 
